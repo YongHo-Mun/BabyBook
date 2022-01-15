@@ -33,8 +33,7 @@ class PageActivity : AppCompatActivity() {
                 dateText = LocalDate.now().toString()
             }
 
-            binding.date.text = dateText
-            binding.content.setText(intent.getStringExtra(EXTRA_PAGE_CONTENT))
+            binding.page = Page(dateText, intent.getStringExtra(EXTRA_PAGE_CONTENT))
         }
     }
 

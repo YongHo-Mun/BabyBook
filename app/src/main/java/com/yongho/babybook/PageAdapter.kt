@@ -29,8 +29,7 @@ class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageIte
 
     inner class ViewHolder(private val binding: PageItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(page: Page) {
-            binding.date.text = page.date
-            binding.content.text = page.content
+            binding.page = page
 
             itemView.setOnClickListener {
                 pageItemClick(page)

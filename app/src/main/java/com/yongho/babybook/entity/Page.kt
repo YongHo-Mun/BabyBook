@@ -8,6 +8,5 @@ import java.time.LocalDate
 data class Page(
     @PrimaryKey
     var date: String,
-
-    var content: String
+    var content: String?
 )

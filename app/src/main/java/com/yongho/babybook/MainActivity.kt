@@ -3,6 +3,7 @@ package com.yongho.babybook
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         binding.pageList.setHasFixedSize(true)
 
         pageViewModel.getAll().observe(this) { pages ->
+            Log.d(TAG, "page list is changed")
             adapter.setPages(pages)
         }
     }
@@ -65,5 +67,9 @@ class MainActivity : AppCompatActivity() {
             }
 
         builder.show()
+    }
+
+    companion object {
+        private const val TAG = "BabyBook"
     }
 }

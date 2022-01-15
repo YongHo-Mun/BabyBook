@@ -25,6 +25,7 @@ class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageIte
 
     fun setPages(pages: List<Page>) {
         this.pages = pages
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: PageItemBinding): RecyclerView.ViewHolder(binding.root) {

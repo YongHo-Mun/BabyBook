@@ -14,12 +14,15 @@ import javax.inject.Singleton
 class PageRepository @Inject constructor(application: Application) {
     private val pageDatabase = PageDatabase.getInstance(application)
     private val pageDao = pageDatabase.pageDao()
-    private val pages = pageDao.getAll()
 
     private val dbIOCoroutineScope = CoroutineScope(Dispatchers.IO)
 
     fun getAll(): LiveData<List<Page>> {
-        return pages
+        return pageDao.getAll()
+    }
+
+    suspend fun getContentByDate(data: String): String {
+        return pageDao.getContentByDate(data)
     }
 
     fun insert(page: Page) {

@@ -2,6 +2,7 @@ package com.yongho.babybook
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import com.yongho.babybook.databinding.ActivityPageBinding
 import com.yongho.babybook.entity.Page
@@ -33,7 +34,10 @@ class PageActivity : AppCompatActivity() {
                 dateText = LocalDate.now().toString()
             }
 
-            binding.page = Page(dateText, intent.getStringExtra(EXTRA_PAGE_CONTENT))
+            pageViewModel.getContentByDate(dateText).observe(this) {
+                Log.d(TAG, "loaded content : $it")
+                binding.page = Page(dateText, it)
+            }
         }
     }
 
@@ -48,6 +52,7 @@ class PageActivity : AppCompatActivity() {
     }
 
     companion object {
+        const val TAG = "PageActivity"
         const val EXTRA_PAGE_DATE = "EXTRA_PAGE_DATE"
         const val EXTRA_PAGE_CONTENT = "EXTRA_PAGE_CONTENT"
     }

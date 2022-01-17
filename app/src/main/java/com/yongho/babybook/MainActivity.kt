@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val pageViewModel: PageViewModel by viewModels()
+    private val pageListViewModel: PageViewModel by viewModels()
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         binding.pageList.layoutManager = LinearLayoutManager(this)
         binding.pageList.setHasFixedSize(true)
 
-        pageViewModel.getAll().observe(this) { pages ->
+        pageListViewModel.getAll().observe(this) { pages ->
             Log.d(TAG, "page list is changed")
             adapter.setPages(pages)
         }
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         builder.setMessage("Delete selected page?")
             .setNegativeButton("NO") { _, _ -> }
             .setPositiveButton("YES") { _, _ ->
-                pageViewModel.delete(page)
+                pageListViewModel.delete(page)
             }
 
         builder.show()

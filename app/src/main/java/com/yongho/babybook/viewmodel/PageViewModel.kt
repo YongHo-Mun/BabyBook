@@ -1,19 +1,30 @@
 package com.yongho.babybook.viewmodel
 
-import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.yongho.babybook.entity.Page
 import com.yongho.babybook.repository.PageRepository
+import kotlinx.coroutines.launch
 
-class PageViewModel @ViewModelInject constructor(private val repository: PageRepository, @Assisted private val savedStateHandle: SavedStateHandle) : ViewModel() {
+class PageViewModel @ViewModelInject constructor(private val repository: PageRepository) : ViewModel() {
 
-    private val pages = repository.getAll()
+    private val content by lazy {
+        MutableLiveData<String>()
+    }
 
     fun getAll(): LiveData<List<Page>> {
-        return this.pages
+        return repository.getAll()
+    }
+
+    fun getContentByDate(date: String): LiveData<String> {
+        viewModelScope.launch {
+            content.value = repository.getContentByDate(date)
+        }
+
+        return content
     }
 
     fun insert(page: Page) {

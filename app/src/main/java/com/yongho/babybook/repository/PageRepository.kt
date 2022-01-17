@@ -7,8 +7,11 @@ import com.yongho.babybook.entity.Page
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class PageRepository(application: Application) {
+@Singleton
+class PageRepository @Inject constructor(application: Application) {
     private val pageDatabase = PageDatabase.getInstance(application)
     private val pageDao = pageDatabase.pageDao()
     private val pages = pageDao.getAll()

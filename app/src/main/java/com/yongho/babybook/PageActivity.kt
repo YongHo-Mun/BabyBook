@@ -2,17 +2,17 @@ package com.yongho.babybook
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.lifecycle.ViewModelProvider
+import androidx.activity.viewModels
 import com.yongho.babybook.databinding.ActivityPageBinding
 import com.yongho.babybook.entity.Page
 import com.yongho.babybook.viewmodel.PageViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
+@AndroidEntryPoint
 class PageActivity : AppCompatActivity() {
 
-    private val pageViewModel by lazy {
-        ViewModelProvider(this).get(PageViewModel::class.java)
-    }
+    private val pageViewModel : PageViewModel by viewModels()
 
     private val binding by lazy {
         ActivityPageBinding.inflate(layoutInflater)

@@ -4,18 +4,18 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yongho.babybook.databinding.ActivityMainBinding
 import com.yongho.babybook.entity.Page
 import com.yongho.babybook.viewmodel.PageViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val pageViewModel by lazy {
-        ViewModelProvider(this).get(PageViewModel::class.java)
-    }
+    private val pageViewModel: PageViewModel by viewModels()
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)

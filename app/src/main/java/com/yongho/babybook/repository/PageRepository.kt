@@ -1,8 +1,7 @@
 package com.yongho.babybook.repository
 
-import android.app.Application
 import androidx.lifecycle.LiveData
-import com.yongho.babybook.database.PageDatabase
+import com.yongho.babybook.dao.PageDao
 import com.yongho.babybook.entity.Page
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,8 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PageRepository @Inject constructor(pageDatabase: PageDatabase) {
-    private val pageDao = pageDatabase.pageDao()
+class PageRepository @Inject constructor(private val pageDao: PageDao) {
 
     private val dbIOCoroutineScope = CoroutineScope(Dispatchers.IO)
 

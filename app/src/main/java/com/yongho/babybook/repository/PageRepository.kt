@@ -11,8 +11,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PageRepository @Inject constructor(application: Application) {
-    private val pageDatabase = PageDatabase.getInstance(application)
+class PageRepository @Inject constructor(pageDatabase: PageDatabase) {
     private val pageDao = pageDatabase.pageDao()
 
     private val dbIOCoroutineScope = CoroutineScope(Dispatchers.IO)

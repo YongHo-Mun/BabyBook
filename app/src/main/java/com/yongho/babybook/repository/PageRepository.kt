@@ -1,10 +1,10 @@
 package com.yongho.babybook.repository
 
-import androidx.lifecycle.LiveData
 import com.yongho.babybook.dao.PageDao
 import com.yongho.babybook.entity.Page
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +14,7 @@ class PageRepository @Inject constructor(private val pageDao: PageDao) {
 
     private val dbIOCoroutineScope = CoroutineScope(Dispatchers.IO)
 
-    fun getAll(): LiveData<List<Page>> {
+    fun getAll(): Flow<Array<Page>> {
         return pageDao.getAll()
     }
 

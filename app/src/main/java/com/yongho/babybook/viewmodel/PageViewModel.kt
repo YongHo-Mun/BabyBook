@@ -1,10 +1,7 @@
 package com.yongho.babybook.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.yongho.babybook.entity.Page
 import com.yongho.babybook.repository.PageRepository
 import kotlinx.coroutines.launch
@@ -15,8 +12,12 @@ class PageViewModel @ViewModelInject constructor(private val repository: PageRep
         MutableLiveData<String>()
     }
 
-    fun getAll(): LiveData<List<Page>> {
-        return repository.getAll()
+    private val pageList by lazy {
+        repository.getAll().asLiveData()
+    }
+
+    fun getAll(): LiveData<Array<Page>> {
+        return pageList
     }
 
     fun getContentByDate(date: String): LiveData<String> {

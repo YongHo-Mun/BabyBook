@@ -8,7 +8,7 @@ import com.yongho.babybook.entity.Page
 
 class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageItemLongClick: (Page) -> Unit) : RecyclerView.Adapter<PageAdapter.ViewHolder>() {
 
-    private var pages = listOf<Page>()
+    private var pages = arrayOf<Page>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageAdapter.ViewHolder {
         val binding = PageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,7 +23,7 @@ class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageIte
         return pages.size
     }
 
-    fun setPages(pages: List<Page>) {
+    fun setPages(pages: Array<Page>) {
         this.pages = pages
         notifyDataSetChanged()
     }

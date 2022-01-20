@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BabyBook">
         <activity
-            android:name=".PageActivity"
+            android:name=".PageFragment"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

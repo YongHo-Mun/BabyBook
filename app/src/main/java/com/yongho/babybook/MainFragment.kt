@@ -13,6 +13,7 @@ import com.yongho.babybook.databinding.FragmentMainBinding
 import com.yongho.babybook.entity.Page
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -41,7 +42,7 @@ class MainFragment : Fragment() {
 
     private fun initRecyclerView() {
         val adapter = PageAdapter({ page ->
-            //TODO: launch page fragment
+            launchPage(page.date)
 
         }, { page ->
             showDeleteDialog(page)
@@ -59,7 +60,7 @@ class MainFragment : Fragment() {
 
     private fun setBtnListener() {
         binding.addButton.setOnClickListener {
-            //TODO: launch page fragment
+            launchPage(LocalDate.now().toString())
         }
     }
 
@@ -73,6 +74,14 @@ class MainFragment : Fragment() {
                 }
 
             builder.show()
+        }
+    }
+
+    private fun launchPage(date: String) {
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.main_fragment_container, PageFragment(date))
+            addToBackStack(null)
+            commit()
         }
     }
 

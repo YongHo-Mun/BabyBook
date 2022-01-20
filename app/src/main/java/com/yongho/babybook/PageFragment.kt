@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
-class PageFragment : Fragment() {
+class PageFragment(private val dateText: String) : Fragment() {
 
     private val pageViewModel : PageViewModel by viewModels()
 
@@ -39,11 +39,6 @@ class PageFragment : Fragment() {
     }
 
     private fun loadInitData() {
-        var dateText: String? = null //TODO: load init data from main
-        if (dateText.isNullOrEmpty()) {
-            dateText = LocalDate.now().toString()
-        }
-
         pageViewModel.getContentByDate(dateText).observe(this) {
             Log.d(TAG, "loaded content : $it")
             binding.page = Page(dateText, it)
@@ -56,7 +51,7 @@ class PageFragment : Fragment() {
             val content = binding.content.text.toString()
 
             pageViewModel.insert(Page(date, content))
-            //TODO: back to main
+            parentFragmentManager.popBackStack()
         }
     }
 

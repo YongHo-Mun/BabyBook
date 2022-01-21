@@ -56,6 +56,6 @@ class PageFragment(private val dateText: String) : Fragment() {
     }
 
     companion object {
-        const val TAG = "PageActivity"
+        const val TAG = "PageFragment"
     }
 }

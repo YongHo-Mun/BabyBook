@@ -86,6 +86,6 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        private const val TAG = "BabyBook.MainFragment"
+        private const val TAG = "MainFragment"
     }
 }

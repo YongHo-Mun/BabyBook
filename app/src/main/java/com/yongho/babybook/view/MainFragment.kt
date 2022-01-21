@@ -1,4 +1,4 @@
-package com.yongho.babybook
+package com.yongho.babybook.view
 
 import android.os.Bundle
 import android.util.Log
@@ -9,8 +9,9 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.yongho.babybook.R
 import com.yongho.babybook.databinding.FragmentMainBinding
-import com.yongho.babybook.entity.Page
+import com.yongho.babybook.data.Page
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate

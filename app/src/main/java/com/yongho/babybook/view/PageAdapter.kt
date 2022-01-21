@@ -1,21 +1,21 @@
-package com.yongho.babybook
+package com.yongho.babybook.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yongho.babybook.databinding.PageItemBinding
-import com.yongho.babybook.entity.Page
+import com.yongho.babybook.data.Page
 
 class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageItemLongClick: (Page) -> Unit) : RecyclerView.Adapter<PageAdapter.ViewHolder>() {
 
     private var pages = arrayOf<Page>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = PageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: PageAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(pages[position])
     }
 

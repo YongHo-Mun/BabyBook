@@ -2,7 +2,7 @@ package com.yongho.babybook.viewmodel
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
-import com.yongho.babybook.entity.Page
+import com.yongho.babybook.data.Page
 import com.yongho.babybook.repository.PageRepository
 import kotlinx.coroutines.launch
 

@@ -1,9 +1,7 @@
-package com.yongho.babybook.database
+package com.yongho.babybook.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.yongho.babybook.dao.PageDao
-import com.yongho.babybook.entity.Page
 import javax.inject.Singleton
 
 @Singleton

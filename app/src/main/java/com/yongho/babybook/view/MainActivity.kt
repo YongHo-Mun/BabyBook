@@ -1,7 +1,8 @@
-package com.yongho.babybook
+package com.yongho.babybook.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.yongho.babybook.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

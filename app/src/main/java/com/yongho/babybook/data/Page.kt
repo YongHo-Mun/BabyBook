@@ -1,4 +1,4 @@
-package com.yongho.babybook.entity
+package com.yongho.babybook.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

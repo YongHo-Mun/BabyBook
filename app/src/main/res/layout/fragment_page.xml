@@ -5,17 +5,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.yongho.babybook.entity.Page" />
+        <import type="com.yongho.babybook.data.Page" />
 
         <variable
             name="page"
-            type="Page" />
+            type="com.yongho.babybook.data.Page" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".PageFragment">
+        tools:context=".view.PageFragment">
 
         <TextView
             android:id="@+id/date"

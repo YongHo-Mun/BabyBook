@@ -1,7 +1,6 @@
-package com.yongho.babybook.dao
+package com.yongho.babybook.data
 
 import androidx.room.*
-import com.yongho.babybook.entity.Page
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -1,9 +1,9 @@
-package com.yongho.babybook.module
+package com.yongho.babybook.hilt
 
 import android.content.Context
 import androidx.room.Room
-import com.yongho.babybook.dao.PageDao
-import com.yongho.babybook.database.PageDatabase
+import com.yongho.babybook.data.PageDao
+import com.yongho.babybook.data.PageDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

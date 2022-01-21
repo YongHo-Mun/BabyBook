@@ -6,11 +6,11 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.yongho.babybook.entity.Page" />
+        <import type="com.yongho.babybook.data.Page" />
         
         <variable
             name="page"
-            type="Page" />
+            type="com.yongho.babybook.data.Page" />
     </data>
 
     <androidx.cardview.widget.CardView

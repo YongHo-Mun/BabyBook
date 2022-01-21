@@ -1,4 +1,4 @@
-package com.yongho.babybook
+package com.yongho.babybook.view
 
 import android.os.Bundle
 import android.util.Log
@@ -8,10 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.yongho.babybook.databinding.FragmentPageBinding
-import com.yongho.babybook.entity.Page
+import com.yongho.babybook.data.Page
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
 
 @AndroidEntryPoint
 class PageFragment(private val dateText: String) : Fragment() {

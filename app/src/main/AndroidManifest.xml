@@ -11,10 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BabyBook">
         <activity
-            android:name=".PageFragment"
+            android:name=".view.PageFragment"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".view.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

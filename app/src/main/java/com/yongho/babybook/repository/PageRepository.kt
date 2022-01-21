@@ -1,7 +1,7 @@
 package com.yongho.babybook.repository
 
-import com.yongho.babybook.dao.PageDao
-import com.yongho.babybook.entity.Page
+import com.yongho.babybook.data.PageDao
+import com.yongho.babybook.data.Page
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

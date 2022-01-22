@@ -61,7 +61,27 @@ class DatabaseTest {
         Assert.assertEquals(pageDao.getContentByDate(pageData.date), pageData.content)
     }
 
-    private fun getDummyPageData(): Page {
-        return Page(LocalDate.now().toString(), "Today's my content")
+    @Test
+    fun insertReplace_samePrimaryKeyInserted_shouldBeReplacedAsLaterData() = runBlocking {
+        val primaryKey = LocalDate.now().toString()
+        val oldContent = "old my content"
+        val newContent = "new my content"
+
+        val firstPageData = getDummyPageData(primaryKey, oldContent)
+        val secondPageData = getDummyPageData(primaryKey, newContent)
+
+        pageDao.insert(firstPageData)
+        pageDao.insert(secondPageData)
+
+        val selectedPageList = pageDao.getAll().first()
+        Assert.assertEquals(selectedPageList.size, 1)
+
+        val actualContent = selectedPageList[0].content
+        Assert.assertEquals(actualContent, newContent)
+        Assert.assertNotEquals(actualContent, oldContent)
+    }
+
+    private fun getDummyPageData(date: String = LocalDate.now().toString(), content: String = "Today's my content"): Page {
+        return Page(date, content)
     }
 }

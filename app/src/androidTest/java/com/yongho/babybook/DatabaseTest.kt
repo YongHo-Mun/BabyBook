@@ -37,7 +37,7 @@ class DatabaseTest {
 
     @Test
     fun insertPage_normal_shouldBeInsertedProperly() = runBlocking {
-        val pageData = Page(LocalDate.now().toString(), "Today's my content")
+        val pageData = getDummyPageData()
 
         pageDao.insert(pageData)
 
@@ -46,10 +46,22 @@ class DatabaseTest {
 
     @Test
     fun deletePage_normal_shouldBeDeletedProperly() = runBlocking {
-        val pageData = Page(LocalDate.now().toString(), "Today's my content")
+        val pageData = getDummyPageData()
         pageDao.insert(pageData)
         pageDao.delete(pageData)
 
         Assert.assertEquals(pageDao.getAll().first().size, 0)
+    }
+
+    @Test
+    fun getContentByDate_normal_shouldBeGotProperly() = runBlocking {
+        val pageData = getDummyPageData()
+        pageDao.insert(pageData)
+
+        Assert.assertEquals(pageDao.getContentByDate(pageData.date), pageData.content)
+    }
+
+    private fun getDummyPageData(): Page {
+        return Page(LocalDate.now().toString(), "Today's my content")
     }
 }

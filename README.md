@@ -9,3 +9,4 @@ Android Mobile application about keeping a baby book
 - Dependancy Injection : Hilt
 - Get view from layout : View Binding
 - For performance at list view : RecyclerView
+- Test : Instrumentation Test (for android platform dependant test), Unit Test (for android platform undependant test)

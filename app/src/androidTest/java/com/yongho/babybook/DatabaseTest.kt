@@ -42,6 +42,14 @@ class DatabaseTest {
         pageDao.insert(pageData)
 
         Assert.assertEquals(pageDao.getAll().first()[0], pageData)
+    }
 
+    @Test
+    fun deletePage_normal_shouldBeDeletedProperly() = runBlocking {
+        val pageData = Page(LocalDate.now().toString(), "Today's my content")
+        pageDao.insert(pageData)
+        pageDao.delete(pageData)
+
+        Assert.assertEquals(pageDao.getAll().first().size, 0)
     }
 }

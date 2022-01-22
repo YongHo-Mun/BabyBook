@@ -29,10 +29,14 @@ class PageViewModel @ViewModelInject constructor(private val repository: PageRep
     }
 
     fun insert(page: Page) {
-        repository.insert(page)
+        viewModelScope.launch {
+            repository.insert(page)
+        }
     }
 
     fun delete(page: Page) {
-        repository.delete(page)
+        viewModelScope.launch {
+            repository.delete(page)
+        }
     }
 }

@@ -12,8 +12,8 @@ interface PageDao {
     suspend fun getContentByDate(date: String): String
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(page: Page)
+    suspend fun insert(page: Page)
 
     @Delete
-    fun delete(page: Page)
+    suspend fun delete(page: Page)
 }

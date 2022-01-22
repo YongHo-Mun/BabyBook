@@ -12,8 +12,6 @@ import javax.inject.Singleton
 @Singleton
 class PageRepository @Inject constructor(private val pageDao: PageDao) {
 
-    private val dbIOCoroutineScope = CoroutineScope(Dispatchers.IO)
-
     fun getAll(): Flow<Array<Page>> {
         return pageDao.getAll()
     }
@@ -22,15 +20,11 @@ class PageRepository @Inject constructor(private val pageDao: PageDao) {
         return pageDao.getContentByDate(data)
     }
 
-    fun insert(page: Page) {
-        dbIOCoroutineScope.launch {
-            pageDao.insert(page)
-        }
+    suspend fun insert(page: Page) {
+        pageDao.insert(page)
     }
 
-    fun delete(page: Page) {
-        dbIOCoroutineScope.launch {
-            pageDao.delete(page)
-        }
+    suspend fun delete(page: Page) {
+        pageDao.delete(page)
     }
 }

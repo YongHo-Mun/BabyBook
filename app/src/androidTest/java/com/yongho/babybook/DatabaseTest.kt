@@ -36,12 +36,20 @@ class DatabaseTest {
     }
 
     @Test
+    fun getAll_initialUse_shouldBeEmptyDataReturned() = runBlocking {
+        val actualPageDataArray = pageDao.getAll().first()
+        Assert.assertEquals(actualPageDataArray.size, 0)
+    }
+
+    @Test
     fun insertPage_normal_shouldBeInsertedProperly() = runBlocking {
         val pageData = getDummyPageData()
 
         pageDao.insert(pageData)
 
-        Assert.assertEquals(pageDao.getAll().first()[0], pageData)
+        val actualPageDataArray = pageDao.getAll().first()
+        Assert.assertEquals(actualPageDataArray.size, 1)
+        Assert.assertEquals(actualPageDataArray[0], pageData)
     }
 
     @Test
@@ -50,7 +58,8 @@ class DatabaseTest {
         pageDao.insert(pageData)
         pageDao.delete(pageData)
 
-        Assert.assertEquals(pageDao.getAll().first().size, 0)
+        val actualPageDataArray = pageDao.getAll().first()
+        Assert.assertEquals(actualPageDataArray.size, 0)
     }
 
     @Test
@@ -73,10 +82,10 @@ class DatabaseTest {
         pageDao.insert(firstPageData)
         pageDao.insert(secondPageData)
 
-        val selectedPageList = pageDao.getAll().first()
-        Assert.assertEquals(selectedPageList.size, 1)
+        val selectedPageArray = pageDao.getAll().first()
+        Assert.assertEquals(selectedPageArray.size, 1)
 
-        val actualContent = selectedPageList[0].content
+        val actualContent = selectedPageArray[0].content
         Assert.assertEquals(actualContent, newContent)
         Assert.assertNotEquals(actualContent, oldContent)
     }

@@ -90,6 +90,19 @@ class DatabaseTest {
         Assert.assertNotEquals(actualContent, oldContent)
     }
 
+    @Test
+    fun insert_aNumberOfDataInserted_dataNeedToBeInsertedProperly() = runBlocking {
+        val dataInsertedCount = 10000
+
+        repeat(dataInsertedCount) {
+            val pageDummyData = getDummyPageData(it.toString(), it.toString())
+            pageDao.insert(pageDummyData)
+        }
+
+        val selectedPageArray = pageDao.getAll().first()
+        Assert.assertEquals(selectedPageArray.size, dataInsertedCount)
+    }
+
     private fun getDummyPageData(date: String = LocalDate.now().toString(), content: String = "Today's my content"): Page {
         return Page(date, content)
     }

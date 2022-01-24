@@ -5,43 +5,43 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import com.yongho.babybook.R
 import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PageFragment(private val dateText: String) : Fragment() {
+class PageFragment : Fragment() {
 
-    private val pageViewModel : PageViewModel by viewModels()
+    private val pageViewModel : PageViewModel by activityViewModels()
 
     private var _binding: FragmentPageBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentPageBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_page, container, false)
+        _binding?.apply {
+            Log.d(TAG, "initialize binding")
+            viewModel = pageViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        loadInitData()
         setBtnListener()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun loadInitData() {
-        pageViewModel.getContentByDate(dateText).observe(this) {
-            Log.d(TAG, "loaded content : $it")
-            binding.page = Page(dateText, it)
-        }
     }
 
     private fun setBtnListener() {

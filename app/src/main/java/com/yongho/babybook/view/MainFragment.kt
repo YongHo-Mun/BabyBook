@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yongho.babybook.R
 import com.yongho.babybook.databinding.FragmentMainBinding
@@ -19,7 +19,7 @@ import java.time.LocalDate
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private val pageListViewModel: PageViewModel by viewModels()
+    private val pageListViewModel: PageViewModel by activityViewModels()
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
@@ -79,11 +79,17 @@ class MainFragment : Fragment() {
     }
 
     private fun launchPage(date: String) {
+        updateCurrentPage(date)
+
         parentFragmentManager.beginTransaction().apply {
-            replace(R.id.main_fragment_container, PageFragment(date))
+            replace(R.id.main_fragment_container, PageFragment())
             addToBackStack(null)
             commit()
         }
+    }
+
+    private fun updateCurrentPage(date: String) {
+        pageListViewModel.setCurrentPage(date)
     }
 
     companion object {

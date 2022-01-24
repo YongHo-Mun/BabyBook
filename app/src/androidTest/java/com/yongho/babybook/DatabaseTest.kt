@@ -63,11 +63,11 @@ class DatabaseTest {
     }
 
     @Test
-    fun getContentByDate_normal_shouldBeGotProperly() = runBlocking {
+    fun getPageByDate_normal_shouldBeGotProperly() = runBlocking {
         val pageData = getDummyPageData()
         pageDao.insert(pageData)
 
-        Assert.assertEquals(pageDao.getContentByDate(pageData.date), pageData.content)
+        Assert.assertEquals(pageDao.getPageByDate(pageData.date), pageData)
     }
 
     @Test

@@ -2,10 +2,7 @@ package com.yongho.babybook.repository
 
 import com.yongho.babybook.data.PageDao
 import com.yongho.babybook.data.Page
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,8 +13,8 @@ class PageRepository @Inject constructor(private val pageDao: PageDao) {
         return pageDao.getAll()
     }
 
-    suspend fun getContentByDate(data: String): String {
-        return pageDao.getContentByDate(data)
+    suspend fun getPageByDate(data: String): Page? {
+        return pageDao.getPageByDate(data)
     }
 
     suspend fun insert(page: Page) {

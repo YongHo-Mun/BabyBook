@@ -8,8 +8,8 @@ interface PageDao {
     @Query("SELECT * FROM page ORDER BY date DESC")
     fun getAll(): Flow<Array<Page>>
 
-    @Query("SELECT content FROM page WHERE date = :date")
-    suspend fun getContentByDate(date: String): String
+    @Query("SELECT * FROM page WHERE date = :date")
+    suspend fun getPageByDate(date: String): Page?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(page: Page)

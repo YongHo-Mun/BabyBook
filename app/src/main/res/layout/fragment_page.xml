@@ -5,11 +5,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.yongho.babybook.data.Page" />
-
         <variable
-            name="page"
-            type="com.yongho.babybook.data.Page" />
+            name="viewModel"
+            type="com.yongho.babybook.viewmodel.PageViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +22,7 @@
             android:gravity="center_horizontal"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:text="@{page.date}"
+            android:text="@{viewModel.currentPage.date}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -36,7 +34,7 @@
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
             android:gravity="start|top"
-            android:text="@{page.content}"
+            android:text="@{viewModel.currentPage.content}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/date"
             app:layout_constraintBottom_toTopOf="@id/add_button"

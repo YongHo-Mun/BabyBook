@@ -42,6 +42,14 @@ class DatabaseTest {
     }
 
     @Test
+    fun getPageByDate_noData_nullShouldBeReturned() = runBlocking {
+        val date = LocalDate.now().toString()
+        val returnedData = pageDao.getPageByDate(date)
+
+        Assert.assertNull(returnedData)
+    }
+
+    @Test
     fun insertPage_normal_shouldBeInsertedProperly() = runBlocking {
         val pageData = getDummyPageData()
 

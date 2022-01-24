@@ -1,6 +1,5 @@
 package com.yongho.babybook.viewmodel
 
-import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.yongho.babybook.data.Page

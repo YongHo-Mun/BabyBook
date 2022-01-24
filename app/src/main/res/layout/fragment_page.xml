@@ -8,6 +8,10 @@
         <variable
             name="viewModel"
             type="com.yongho.babybook.viewmodel.PageViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.yongho.babybook.view.PageFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -45,6 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Done"
+            android:onClick="@{() -> fragment.onDoneButtonClickedListener(date.getText().toString(), content.getText().toString())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

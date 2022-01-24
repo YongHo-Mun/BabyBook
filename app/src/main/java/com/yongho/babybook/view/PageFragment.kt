@@ -28,15 +28,10 @@ class PageFragment : Fragment() {
             Log.d(TAG, "initialize binding")
             viewModel = pageViewModel
             lifecycleOwner = viewLifecycleOwner
+            fragment = this@PageFragment
         }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setBtnListener()
     }
 
     override fun onDestroyView() {
@@ -44,14 +39,10 @@ class PageFragment : Fragment() {
         _binding = null
     }
 
-    private fun setBtnListener() {
-        binding.addButton.setOnClickListener {
-            val date = binding.date.text.toString()
-            val content = binding.content.text.toString()
-
-            pageViewModel.insert(Page(date, content))
-            parentFragmentManager.popBackStack()
-        }
+    fun onDoneButtonClickedListener(date: String, content: String) {
+        Log.d(TAG, "date: $date, content: $content")
+        pageViewModel.insert(Page(date, content))
+        parentFragmentManager.popBackStack()
     }
 
     companion object {

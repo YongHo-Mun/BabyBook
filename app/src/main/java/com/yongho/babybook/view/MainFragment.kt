@@ -40,7 +40,6 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        setBtnListener()
     }
 
     override fun onDestroyView() {
@@ -61,6 +60,10 @@ class MainFragment : Fragment() {
         }
     }
 
+    fun onAddButtonClickedListener() {
+        launchPage(LocalDate.now().toString())
+    }
+
     fun launchPage(date: String) {
         updateCurrentPage(date)
 
@@ -73,12 +76,6 @@ class MainFragment : Fragment() {
 
     private fun initRecyclerView() {
         binding.pageList.setHasFixedSize(true)
-    }
-
-    private fun setBtnListener() {
-        binding.addButton.setOnClickListener {
-            launchPage(LocalDate.now().toString())
-        }
     }
 
     private fun updateCurrentPage(date: String) {

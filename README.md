@@ -7,6 +7,6 @@ Android Mobile application about keeping a baby book
 - Async Handling : Coroutine, LiveData(for UI update)
 - Architecture : MVVM
 - Dependancy Injection : Hilt
-- Get view from layout : View Binding
+- Connection between data and view : Data Binding
 - For performance at list view : RecyclerView
 - Test : Instrumentation Test (for android platform dependant test), Unit Test (for android platform undependant test)

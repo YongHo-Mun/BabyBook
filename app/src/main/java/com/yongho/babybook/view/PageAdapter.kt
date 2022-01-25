@@ -2,16 +2,20 @@ package com.yongho.babybook.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.yongho.babybook.R
 import com.yongho.babybook.databinding.PageItemBinding
 import com.yongho.babybook.data.Page
 
-class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageItemLongClick: (Page) -> Unit) : RecyclerView.Adapter<PageAdapter.ViewHolder>() {
+class PageAdapter(private val pageEventListener: PageEventListener) : RecyclerView.Adapter<PageAdapter.ViewHolder>() {
 
     private var pages = arrayOf<Page>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = PageItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = DataBindingUtil.inflate<PageItemBinding>(LayoutInflater.from(parent.context), R.layout.page_item, parent, false).apply {
+            eventListener = pageEventListener
+        }
         return ViewHolder(binding)
     }
 
@@ -31,15 +35,11 @@ class PageAdapter(private val pageItemClick: (Page) -> Unit, private val pageIte
     inner class ViewHolder(private val binding: PageItemBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(page: Page) {
             binding.page = page
-
-            itemView.setOnClickListener {
-                pageItemClick(page)
-            }
-
-            itemView.setOnLongClickListener {
-                pageItemLongClick(page)
-                true
-            }
         }
+    }
+
+    interface PageEventListener {
+        fun onItemClicked(page: Page)
+        fun onItemLongClicked(page: Page): Boolean
     }
 }

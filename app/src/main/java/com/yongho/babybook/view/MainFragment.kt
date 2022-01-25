@@ -87,7 +87,7 @@ class MainFragment : Fragment() {
     }
 }
 
-@BindingAdapter(value = ["pages", "fragment"], requireAll = false)
+@BindingAdapter(value = ["bind:pages", "bind:fragment"], requireAll = false)
 fun setPages(recyclerView: RecyclerView, pages: Array<Page>?, fragment: MainFragment) {
 
     if (recyclerView.adapter == null) {

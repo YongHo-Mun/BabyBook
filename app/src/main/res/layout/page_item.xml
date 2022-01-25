@@ -6,16 +6,20 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="com.yongho.babybook.data.Page" />
-        
         <variable
             name="page"
             type="com.yongho.babybook.data.Page" />
+        
+        <variable
+            name="eventListener"
+            type="com.yongho.babybook.view.PageAdapter.PageEventListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{() -> eventListener.onItemClicked(page)}"
+        android:onLongClick="@{() -> eventListener.onItemLongClicked(page)}"
         card_view:cardCornerRadius="@dimen/list_item_corner_radius"
         card_view:cardElevation="@dimen/list_item_elevation"
         card_view:cardUseCompatPadding="true"

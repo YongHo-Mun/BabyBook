@@ -91,11 +91,15 @@ class MainFragment : Fragment() {
 fun setPages(recyclerView: RecyclerView, pages: Array<Page>?, fragment: MainFragment) {
 
     if (recyclerView.adapter == null) {
-        recyclerView.adapter = PageAdapter({ page ->
-            fragment.launchPage(page.date)
+        recyclerView.adapter = PageAdapter(object : PageAdapter.PageEventListener {
+            override fun onItemClicked(page: Page) {
+                fragment.launchPage(page.date)
+            }
 
-        }, { page ->
-            fragment.showDeleteDialog(page)
+            override fun onItemLongClicked(page: Page): Boolean {
+                fragment.showDeleteDialog(page)
+                return true
+            }
         })
     }
 

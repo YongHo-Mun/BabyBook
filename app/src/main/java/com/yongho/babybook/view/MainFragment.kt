@@ -1,14 +1,15 @@
 package com.yongho.babybook.view
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.databinding.BindingAdapter
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.yongho.babybook.R
 import com.yongho.babybook.databinding.FragmentMainBinding
 import com.yongho.babybook.data.Page
@@ -25,7 +26,13 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
+        _binding?.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = pageListViewModel
+            fragment = this@MainFragment
+        }
+
         return binding.root
     }
 
@@ -41,31 +48,7 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-    private fun initRecyclerView() {
-        val adapter = PageAdapter({ page ->
-            launchPage(page.date)
-
-        }, { page ->
-            showDeleteDialog(page)
-        })
-
-        binding.pageList.adapter = adapter
-        binding.pageList.layoutManager = LinearLayoutManager(activity)
-        binding.pageList.setHasFixedSize(true)
-
-        pageListViewModel.getAll().observe(this) { pages ->
-            Log.d(TAG, "page list is changed")
-            adapter.setPages(pages)
-        }
-    }
-
-    private fun setBtnListener() {
-        binding.addButton.setOnClickListener {
-            launchPage(LocalDate.now().toString())
-        }
-    }
-
-    private fun showDeleteDialog(page: Page) {
+    fun showDeleteDialog(page: Page) {
         activity?.let {
             val builder = AlertDialog.Builder(activity!!)
             builder.setMessage("Delete selected page?")
@@ -78,7 +61,7 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun launchPage(date: String) {
+    fun launchPage(date: String) {
         updateCurrentPage(date)
 
         parentFragmentManager.beginTransaction().apply {
@@ -88,11 +71,39 @@ class MainFragment : Fragment() {
         }
     }
 
+    private fun initRecyclerView() {
+        binding.pageList.setHasFixedSize(true)
+    }
+
+    private fun setBtnListener() {
+        binding.addButton.setOnClickListener {
+            launchPage(LocalDate.now().toString())
+        }
+    }
+
     private fun updateCurrentPage(date: String) {
         pageListViewModel.setCurrentPage(date)
     }
 
     companion object {
         private const val TAG = "MainFragment"
+    }
+}
+
+@BindingAdapter(value = ["pages", "fragment"], requireAll = false)
+fun setPages(recyclerView: RecyclerView, pages: Array<Page>?, fragment: MainFragment) {
+
+    if (recyclerView.adapter == null) {
+        recyclerView.adapter = PageAdapter({ page ->
+            fragment.launchPage(page.date)
+
+        }, { page ->
+            fragment.showDeleteDialog(page)
+        })
+    }
+
+    pages?.let {
+        val adapter = recyclerView.adapter as PageAdapter
+        adapter.setPages(it)
     }
 }

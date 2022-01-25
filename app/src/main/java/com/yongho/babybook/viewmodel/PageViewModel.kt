@@ -12,12 +12,8 @@ class PageViewModel @ViewModelInject constructor(private val repository: PageRep
         MutableLiveData<Page>()
     }
 
-    private val pageList by lazy {
+    val pageList by lazy {
         repository.getAll().asLiveData()
-    }
-
-    fun getAll(): LiveData<Array<Page>> {
-        return pageList
     }
 
     fun setCurrentPage(date: String) {

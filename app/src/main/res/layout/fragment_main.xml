@@ -21,8 +21,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/page_list"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/constraint_match"
+            android:layout_height="@dimen/constraint_match"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,8 +33,8 @@
 
         <Button
             android:id="@+id/add_button"
-            android:text="Add"
-            android:layout_width="0dp"
+            android:text="@string/button_add"
+            android:layout_width="@dimen/constraint_match"
             android:layout_height="wrap_content"
             android:onClick="@{() -> fragment.onAddButtonClickedListener()}"
             app:layout_constraintBottom_toBottomOf="parent"

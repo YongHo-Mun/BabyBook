@@ -9,19 +9,19 @@
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/constraint_match"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="@dimen/title_top_margin"
         android:gravity="center"
-        android:textSize="24sp"
+        android:textSize="@dimen/title_text_size"
         android:textStyle="bold"
-        android:text="아기의 생년월일을 입력해주세요 :)"
+        android:text="@string/birthday_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
     
     <CalendarView
-        android:layout_width="0dp"
+        android:layout_width="@dimen/constraint_match"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title"
@@ -30,9 +30,9 @@
 
     <Button
         android:id="@+id/done_button"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/constraint_match"
         android:layout_height="wrap_content"
-        android:text="완료"
+        android:text="@string/button_done"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

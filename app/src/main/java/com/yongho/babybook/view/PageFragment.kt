@@ -39,7 +39,7 @@ class PageFragment : Fragment() {
         _binding = null
     }
 
-    fun onDoneButtonClickedListener(date: String, content: String) {
+    fun onDoneButtonClicked(date: String, content: String) {
         Log.d(TAG, "date: $date, content: $content")
         pageViewModel.insert(Page(date, content))
         parentFragmentManager.popBackStack()

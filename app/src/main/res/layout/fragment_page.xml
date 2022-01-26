@@ -49,7 +49,7 @@
             android:layout_width="@dimen/constraint_match"
             android:layout_height="wrap_content"
             android:text="@string/button_done"
-            android:onClick="@{() -> fragment.onDoneButtonClickedListener(date.getText().toString(), content.getText().toString())}"
+            android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

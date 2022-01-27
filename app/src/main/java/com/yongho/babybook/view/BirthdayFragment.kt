@@ -25,11 +25,6 @@ class BirthdayFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
         Log.d(TAG, "onCreateView")
 
-        if (isBirthdayInputted()) {
-            launchMainPageList()
-            return null
-        }
-
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_birthday, container, false)
         _binding?.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -45,24 +40,9 @@ class BirthdayFragment : Fragment() {
     }
 
     fun onDoneButtonClicked(date: Long) {
-//        val birthDay = Instant.ofEpochMilli(date).atZone(ZoneId.systemDefault()).toLocalDate()
         Log.d(TAG, "selected date : $date")
         saveBirthday(date)
-        launchMainPageList()
-    }
-
-    private fun isBirthdayInputted() : Boolean {
-        var birthdayInputted = false
-
-        activity?.let {
-            val sharedPreferences = it.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-            val birthday = sharedPreferences.getLong(SHARED_PREFERENCES_BIRTH_DAY_KEY, SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
-
-            birthdayInputted = (birthday != SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
-        }
-
-        Log.d(TAG, "birthdayInputted : $birthdayInputted")
-        return birthdayInputted
+        parentFragmentManager.popBackStack()
     }
 
     private fun saveBirthday(birthday: Long) {
@@ -70,14 +50,6 @@ class BirthdayFragment : Fragment() {
             val sharedPreferencesEditor = it.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE).edit()
             sharedPreferencesEditor.putLong(SHARED_PREFERENCES_BIRTH_DAY_KEY, birthday)
             sharedPreferencesEditor.commit()
-        }
-    }
-
-    private fun launchMainPageList() {
-        Log.d(TAG, "launchMainPageList")
-        parentFragmentManager.beginTransaction().apply {
-            replace(R.id.main_fragment_container, MainFragment())
-            commit()
         }
     }
 

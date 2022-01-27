@@ -1,7 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.fragment.app.FragmentContainerView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_fragment_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="com.yongho.babybook.view.BirthdayFragment" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:theme="?attr/actionBarTheme"
+            android:minHeight="?attr/actionBarSize"
+            app:titleTextColor="@color/white"/>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.yongho.babybook.view.MainFragment"/>
+    </LinearLayout>
+
+</layout>

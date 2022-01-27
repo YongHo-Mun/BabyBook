@@ -1,6 +1,8 @@
 package com.yongho.babybook.view
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +27,13 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
+
+        if (!isBirthdayInputted()) {
+            launchBirthdayPage()
+            return null
+        }
+
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
         _binding?.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -68,7 +76,7 @@ class MainFragment : Fragment() {
         updateCurrentPage(date)
 
         parentFragmentManager.beginTransaction().apply {
-            replace(R.id.main_fragment_container, PageFragment())
+            replace(R.id.fragment_container, PageFragment())
             addToBackStack(null)
             commit()
         }
@@ -80,6 +88,31 @@ class MainFragment : Fragment() {
 
     private fun updateCurrentPage(date: String) {
         pageListViewModel.setCurrentPage(date)
+    }
+
+    private fun isBirthdayInputted() : Boolean {
+        var birthdayInputted = false
+
+        activity?.let {
+            val sharedPreferences = it.getSharedPreferences(BirthdayFragment.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+            val birthday = sharedPreferences.getLong(
+                BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_KEY,
+                BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE
+            )
+
+            birthdayInputted = (birthday != BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
+        }
+
+        Log.d(BirthdayFragment.TAG, "birthdayInputted : $birthdayInputted")
+        return birthdayInputted
+    }
+
+    private fun launchBirthdayPage() {
+        Log.d(BirthdayFragment.TAG, "launchMainPageList")
+        parentFragmentManager.beginTransaction().apply {
+            replace(R.id.fragment_container, BirthdayFragment())
+            commit()
+        }
     }
 
     companion object {

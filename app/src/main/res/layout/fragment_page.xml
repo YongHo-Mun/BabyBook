@@ -41,17 +41,27 @@
             android:text="@{viewModel.currentPage.content}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/date"
-            app:layout_constraintBottom_toTopOf="@id/add_button"
+            app:layout_constraintBottom_toTopOf="@id/done_button"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
-            android:id="@+id/add_button"
+            android:id="@+id/done_button"
             android:layout_width="@dimen/constraint_match"
             android:layout_height="wrap_content"
             android:text="@string/button_done"
             android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/image_button" />
+
+        <Button
+            android:id="@+id/image_button"
+            android:layout_width="@dimen/constraint_match"
+            android:layout_height="wrap_content"
+            android:text="@string/button_image"
+            android:onClick="@{() -> fragment.onImageButtonClicked()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/done_button"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

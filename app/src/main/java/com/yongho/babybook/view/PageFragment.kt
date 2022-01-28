@@ -3,6 +3,7 @@ package com.yongho.babybook.view
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -27,10 +28,24 @@ class PageFragment : Fragment() {
     private var _binding: FragmentPageBinding? = null
     private val binding get() = _binding!!
 
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        when(it.resultCode) {
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        when(activityResult.resultCode) {
             RESULT_OK -> {
-                Log.d(TAG, "selected image : ${it.data?.data}")
+                activityResult.data?.let { intent ->
+                    val imageList = arrayListOf<Uri>()
+
+                    intent.data?.let { uri ->
+                        imageList.add(uri)
+                    } ?: intent.clipData?.let { clipData ->
+                        val size = clipData.itemCount
+
+                        for (idx in 0 until size) {
+                            imageList.add(clipData.getItemAt(idx).uri)
+                        }
+                    }
+
+                    setImages(imageList)
+                }
             }
 
             RESULT_CANCELED -> {
@@ -66,9 +81,17 @@ class PageFragment : Fragment() {
         Log.d(TAG, "onViewPagerClicked")
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = MediaStore.Images.Media.CONTENT_TYPE
+            data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
 
         galleryLauncher.launch(intent)
+    }
+
+    private fun setImages(imageList: ArrayList<Uri>) {
+        imageList.forEach { uri ->
+            Log.d(TAG, "Selected uri : $uri")
+        }
     }
 
     companion object {

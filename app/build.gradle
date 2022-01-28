@@ -81,5 +81,5 @@ dependencies {
 }
 
 dependencies {
-    implementation 'me.relex:circleindicator:1.2.2'
+    implementation 'me.relex:circleindicator:2.1.4'
 }

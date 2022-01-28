@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -62,8 +63,8 @@ class PageFragment : Fragment() {
     }
 
     fun onImageButtonClicked() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
-            type = "image/*"
+        val intent = Intent(Intent.ACTION_PICK).apply {
+            type = MediaStore.Images.Media.CONTENT_TYPE
         }
 
         galleryLauncher.launch(intent)

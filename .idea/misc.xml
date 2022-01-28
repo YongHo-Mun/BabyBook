@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/BabyBook/app/src/main/res/drawable/image_indicator.xml" value="0.334375" />
         <entry key="..\:/BabyBook/app/src/main/res/layout/activity_main.xml" value="0.5494791666666666" />
         <entry key="..\:/BabyBook/app/src/main/res/layout/activity_page.xml" value="0.5494791666666666" />
         <entry key="..\:/BabyBook/app/src/main/res/layout/fragment_birthday.xml" value="0.32760416666666664" />

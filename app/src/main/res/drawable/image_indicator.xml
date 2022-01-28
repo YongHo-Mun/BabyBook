@@ -6,4 +6,8 @@
     <solid
         android:color="@color/black"/>
 
+    <size
+        android:height="@dimen/circle_indicator_height"
+        android:width="@dimen/circle_indicator_width" />
+
 </shape>

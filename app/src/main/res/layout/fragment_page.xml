@@ -31,27 +31,36 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <androidx.viewpager.widget.ViewPager
+        <FrameLayout
             android:id="@+id/image_view_pager"
             android:layout_width="@dimen/constraint_match"
             android:layout_height="@dimen/image_view_pager_height"
-            android:onClick="@{() -> fragment.onImageButtonClicked()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/date"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent">
 
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/image_view_pager_indicator"
-            android:layout_width="@dimen/constraint_match"
-            android:layout_height="@dimen/circle_indicator_layout_height"
-            app:ci_drawable="@drawable/image_indicator"
-            app:ci_height="@dimen/circle_indicator_height"
-            app:ci_margin="@dimen/circle_indicator_margin"
-            app:ci_width="@dimen/circle_indicator_width"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_view_pager"
-            app:layout_constraintBottom_toTopOf="@id/content"
-            app:layout_constraintEnd_toEndOf="parent" />
+            <androidx.viewpager2.widget.ViewPager2
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/circle_indicator_layout_height"
+                android:layout_gravity="bottom"
+                app:ci_drawable="@drawable/image_indicator"
+                app:ci_height="@dimen/circle_indicator_height"
+                app:ci_margin="@dimen/circle_indicator_margin"
+                app:ci_width="@dimen/circle_indicator_width" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:onClick="@{() -> fragment.onViewPagerClicked()}"
+                android:src="@drawable/ic_launcher_background"/>
+
+        </FrameLayout>
+
 
         <EditText
             android:id="@+id/content"
@@ -62,7 +71,7 @@
             android:gravity="start|top"
             android:text="@{viewModel.currentPage.content}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_view_pager_indicator"
+            app:layout_constraintTop_toBottomOf="@id/image_view_pager"
             app:layout_constraintBottom_toTopOf="@id/done_button"
             app:layout_constraintEnd_toEndOf="parent" />
 

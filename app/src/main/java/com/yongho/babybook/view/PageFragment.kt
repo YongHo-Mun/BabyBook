@@ -62,7 +62,8 @@ class PageFragment : Fragment() {
         parentFragmentManager.popBackStack()
     }
 
-    fun onImageButtonClicked() {
+    fun onViewPagerClicked() {
+        Log.d(TAG, "onViewPagerClicked")
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = MediaStore.Images.Media.CONTENT_TYPE
         }

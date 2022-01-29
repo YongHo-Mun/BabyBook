@@ -9,7 +9,7 @@ interface PageDao {
     fun getAll(): Flow<Array<Page>>
 
     @Query("SELECT * FROM page WHERE date = :date")
-    suspend fun getPageByDate(date: String): Page?
+    fun getPageByDate(date: String): Flow<Page>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(page: Page)

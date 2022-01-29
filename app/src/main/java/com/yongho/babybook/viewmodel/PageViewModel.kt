@@ -8,19 +8,15 @@ import kotlinx.coroutines.launch
 
 class PageViewModel @ViewModelInject constructor(private val repository: PageRepository) : ViewModel() {
 
-    val currentPage by lazy {
-        MutableLiveData<Page>()
-    }
+    var currentPage: LiveData<Page> = MutableLiveData()
 
     val pageList by lazy {
         repository.getAll().asLiveData()
     }
 
     fun setCurrentPage(date: String) {
-        viewModelScope.launch {
-            val currentPageData = repository.getPageByDate(date) ?: Page(date, "")
-            currentPage.value = currentPageData
-        }
+        val currentPageData = repository.getPageByDate(date)
+        currentPage = currentPageData.asLiveData()
     }
 
     fun insert(page: Page) {

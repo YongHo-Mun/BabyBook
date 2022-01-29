@@ -18,7 +18,7 @@ class PageViewModel @ViewModelInject constructor(private val repository: PageRep
 
     fun setCurrentPage(date: String) {
         viewModelScope.launch {
-            val currentPageData = repository.getPageByDate(date) ?: Page(date, "")
+            val currentPageData = repository.getPageByDate(date) ?: Page(date, null, null)
             currentPage.value = currentPageData
         }
     }

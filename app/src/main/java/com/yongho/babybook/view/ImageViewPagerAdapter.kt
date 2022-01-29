@@ -10,7 +10,7 @@ import com.yongho.babybook.databinding.ImageViewPagerItemBinding
 
 class ImageViewPagerAdapter : RecyclerView.Adapter<ImageViewPagerAdapter.ViewHolder>() {
 
-    private var imageList = arrayOf<Uri>()
+    private var imageList = listOf<Uri>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<ImageViewPagerItemBinding>(LayoutInflater.from(parent.context), R.layout.image_view_pager_item, parent, false)
@@ -26,7 +26,7 @@ class ImageViewPagerAdapter : RecyclerView.Adapter<ImageViewPagerAdapter.ViewHol
         return imageList.size
     }
 
-    fun setImageList(imageList: Array<Uri>) {
+    fun setImageList(imageList: List<Uri>) {
         this.imageList = imageList
         notifyDataSetChanged()
     }

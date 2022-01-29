@@ -11,12 +11,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.viewpager2.widget.ViewPager2
 import com.yongho.babybook.R
-import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.data.Page
+import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -61,6 +63,7 @@ class PageFragment : Fragment() {
             viewModel = pageViewModel
             lifecycleOwner = viewLifecycleOwner
             fragment = this@PageFragment
+            imageViewPager.adapter = ImageViewPagerAdapter()
         }
 
         return binding.root
@@ -71,9 +74,8 @@ class PageFragment : Fragment() {
         _binding = null
     }
 
-    fun onDoneButtonClicked(date: String, content: String) {
-        Log.d(TAG, "date: $date, content: $content")
-        pageViewModel.insert(Page(date, content))
+    fun onDoneButtonClicked(date: String, content: String, imageList: List<Uri>) {
+        pageViewModel.insert(Page(date, content, imageList))
         parentFragmentManager.popBackStack()
     }
 
@@ -81,7 +83,7 @@ class PageFragment : Fragment() {
         Log.d(TAG, "onViewPagerClicked")
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = MediaStore.Images.Media.CONTENT_TYPE
-            data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+            data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
             putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         }
 
@@ -89,12 +91,24 @@ class PageFragment : Fragment() {
     }
 
     private fun setImages(imageList: ArrayList<Uri>) {
-        imageList.forEach { uri ->
-            Log.d(TAG, "Selected uri : $uri")
+        if (imageList.isNotEmpty()) {
+            val imageAdapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
+            imageAdapter.setImageList(imageList)
+            binding.emptyImage.visibility = View.INVISIBLE
+        } else {
+            binding.emptyImage.visibility = View.VISIBLE
         }
     }
 
     companion object {
         const val TAG = "PageFragment"
+    }
+}
+
+@BindingAdapter(value = ["bind:images"], requireAll = false)
+fun setImages(viewPager: ViewPager2, images: List<Uri>?) {
+    images?.let {
+        val adapter = viewPager.adapter as ImageViewPagerAdapter
+        adapter.setImageList(images)
     }
 }

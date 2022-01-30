@@ -13,7 +13,7 @@ class PageRepository @Inject constructor(private val pageDao: PageDao) {
         return pageDao.getAll()
     }
 
-    fun getPageByDate(data: String): Flow<Page> {
+    suspend fun getPageByDate(data: String): Page? {
         return pageDao.getPageByDate(data)
     }
 

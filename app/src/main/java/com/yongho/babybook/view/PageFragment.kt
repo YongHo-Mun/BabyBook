@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.yongho.babybook.R
-import com.yongho.babybook.data.Page
 import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -74,9 +73,12 @@ class PageFragment : Fragment() {
         _binding = null
     }
 
-    fun onDoneButtonClicked(date: String, content: String?, imageList: List<Uri>?) {
+    fun onDoneButtonClicked(date: String, content: String?) {
         Log.d(TAG, "onDoneButtonClicked")
-        pageViewModel.insert(Page(date, content, imageList))
+        Log.d(TAG, "date: $date, content: $content")
+        pageViewModel.currentPage.date = date
+        pageViewModel.currentPage.content = content
+        pageViewModel.saveCurrentPage()
         parentFragmentManager.popBackStack()
     }
 
@@ -96,7 +98,8 @@ class PageFragment : Fragment() {
             val imageAdapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
             imageAdapter.setImageList(imageList)
             binding.emptyImage.visibility = View.INVISIBLE
-            binding.selectedImages = imageList
+
+            pageViewModel.currentPage.imageList = imageList
         } else {
             binding.emptyImage.visibility = View.VISIBLE
         }

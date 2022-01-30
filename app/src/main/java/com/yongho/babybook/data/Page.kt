@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "page")
 data class Page(
     @PrimaryKey
-    val date: String,
+    var date: String,
     var content: String?,
     var imageList: List<Uri>?
 )

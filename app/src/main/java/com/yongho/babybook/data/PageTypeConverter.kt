@@ -18,7 +18,9 @@ class PageTypeConverter {
             return null
         }
 
-        return gson.toJson(value)
+        return gson.toJson(value.map {
+            it.toString()
+        })
     }
 
     @TypeConverter
@@ -27,6 +29,9 @@ class PageTypeConverter {
             return null
         }
 
-        return gson.fromJson(value, Array<Uri>::class.java).toList()
+        val stringUriList = gson.fromJson(value, Array<String>::class.java)
+        return stringUriList.map {
+            Uri.parse(it)
+        }
     }
 }

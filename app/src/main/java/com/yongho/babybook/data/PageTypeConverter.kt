@@ -13,22 +13,16 @@ class PageTypeConverter {
     }
 
     @TypeConverter
-    fun arrayUriToString(value: List<Uri>?): String? {
-        if (value == null) {
-            return null
+    fun arrayUriToString(value: List<Uri>): String {
+        val stringUriList = value.map {
+            it.toString()
         }
 
-        return gson.toJson(value.map {
-            it.toString()
-        })
+        return gson.toJson(stringUriList)
     }
 
     @TypeConverter
-    fun stringToArrayUri(value: String?): List<Uri>? {
-        if (value == null) {
-            return null
-        }
-
+    fun stringToArrayUri(value: String): List<Uri> {
         val stringUriList = gson.fromJson(value, Array<String>::class.java)
         return stringUriList.map {
             Uri.parse(it)

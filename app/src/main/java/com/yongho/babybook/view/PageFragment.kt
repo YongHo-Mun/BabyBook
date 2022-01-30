@@ -76,8 +76,8 @@ class PageFragment : Fragment() {
     fun onDoneButtonClicked(date: String, content: String?) {
         Log.d(TAG, "onDoneButtonClicked")
         Log.d(TAG, "date: $date, content: $content")
-        pageViewModel.currentPage.date = date
-        pageViewModel.currentPage.content = content
+        pageViewModel.currentDate.value = date
+        pageViewModel.currentContent.value = content
         pageViewModel.saveCurrentPage()
         parentFragmentManager.popBackStack()
     }
@@ -95,13 +95,7 @@ class PageFragment : Fragment() {
 
     private fun setImages(imageList: ArrayList<Uri>) {
         if (imageList.isNotEmpty()) {
-            val imageAdapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
-            imageAdapter.setImageList(imageList)
-            binding.emptyImage.visibility = View.INVISIBLE
-
-            pageViewModel.currentPage.imageList = imageList
-        } else {
-            binding.emptyImage.visibility = View.VISIBLE
+            pageViewModel.currentImageList.value = imageList
         }
     }
 
@@ -111,9 +105,7 @@ class PageFragment : Fragment() {
 }
 
 @BindingAdapter(value = ["bind:images"], requireAll = false)
-fun setImages(viewPager: ViewPager2, images: List<Uri>?) {
-    images?.let {
-        val adapter = viewPager.adapter as ImageViewPagerAdapter
-        adapter.setImageList(images)
-    }
+fun setImages(viewPager: ViewPager2, images: List<Uri>) {
+    val adapter = viewPager.adapter as ImageViewPagerAdapter
+    adapter.setImageList(images)
 }

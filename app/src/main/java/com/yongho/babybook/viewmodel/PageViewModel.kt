@@ -1,5 +1,6 @@
 package com.yongho.babybook.viewmodel
 
+import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.yongho.babybook.data.Page
@@ -8,25 +9,33 @@ import kotlinx.coroutines.launch
 
 class PageViewModel @ViewModelInject constructor(private val repository: PageRepository) : ViewModel() {
 
-    var currentPage: Page = Page("", null, null)
+    var currentDate = MutableLiveData("")
+    var currentContent = MutableLiveData("")
+    var currentImageList = MutableLiveData(listOf<Uri>())
 
     val pageList by lazy {
         repository.getAll().asLiveData()
     }
 
     fun setCurrentPage(date: String) {
+        currentDate.value = date
         viewModelScope.launch {
-            val currentPageData = repository.getPageByDate(date)
+            val queryData = repository.getPageByDate(date)
 
-            if (currentPageData != null) {
-                currentPage = currentPageData
-            } else {
-                currentPage.date = date
+            if (queryData != null) {
+                queryData.content.let {
+                    currentContent.value = it
+                }
+
+                queryData.imageList.let {
+                    currentImageList.value = it
+                }
             }
         }
     }
 
     fun saveCurrentPage() {
+        val currentPage = Page(currentDate.value!!, currentContent.value!!, currentImageList.value!!)
         insert(currentPage)
     }
 

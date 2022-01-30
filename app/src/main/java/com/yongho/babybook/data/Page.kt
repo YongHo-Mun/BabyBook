@@ -8,6 +8,6 @@ import androidx.room.PrimaryKey
 data class Page(
     @PrimaryKey
     var date: String,
-    var content: String?,
-    var imageList: List<Uri>?
+    var content: String,
+    var imageList: List<Uri>
 )

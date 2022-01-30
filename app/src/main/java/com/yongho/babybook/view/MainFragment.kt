@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
 
     fun showDeleteDialog(page: Page) {
         activity?.let {
-            val builder = AlertDialog.Builder(activity!!)
+            val builder = AlertDialog.Builder(requireActivity())
             builder.setMessage("Delete selected page?")
                 .setNegativeButton("NO") { _, _ -> }
                 .setPositiveButton("YES") { _, _ ->
@@ -87,6 +87,7 @@ class MainFragment : Fragment() {
     }
 
     private fun updateCurrentPage(date: String) {
+        Log.d(TAG, "update current date : $date")
         pageListViewModel.setCurrentPage(date)
     }
 

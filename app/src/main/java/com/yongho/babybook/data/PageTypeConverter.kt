@@ -13,8 +13,20 @@ class PageTypeConverter {
     }
 
     @TypeConverter
-    fun arrayUriToString(value: List<Uri>): String = gson.toJson(value)
+    fun arrayUriToString(value: List<Uri>?): String? {
+        if (value == null) {
+            return null
+        }
+
+        return gson.toJson(value)
+    }
 
     @TypeConverter
-    fun stringToArrayUri(value: String): List<Uri> = gson.fromJson(value, Array<Uri>::class.java).toList()
+    fun stringToArrayUri(value: String?): List<Uri>? {
+        if (value == null) {
+            return null
+        }
+
+        return gson.fromJson(value, Array<Uri>::class.java).toList()
+    }
 }

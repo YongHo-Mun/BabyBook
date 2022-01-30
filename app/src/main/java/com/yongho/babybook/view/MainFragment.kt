@@ -112,6 +112,7 @@ class MainFragment : Fragment() {
         Log.d(BirthdayFragment.TAG, "launchMainPageList")
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, BirthdayFragment())
+            addToBackStack(null)
             commit()
         }
     }

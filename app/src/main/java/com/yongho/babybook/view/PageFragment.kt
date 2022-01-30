@@ -74,7 +74,8 @@ class PageFragment : Fragment() {
         _binding = null
     }
 
-    fun onDoneButtonClicked(date: String, content: String, imageList: List<Uri>) {
+    fun onDoneButtonClicked(date: String, content: String?, imageList: List<Uri>?) {
+        Log.d(TAG, "onDoneButtonClicked")
         pageViewModel.insert(Page(date, content, imageList))
         parentFragmentManager.popBackStack()
     }
@@ -95,6 +96,7 @@ class PageFragment : Fragment() {
             val imageAdapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
             imageAdapter.setImageList(imageList)
             binding.emptyImage.visibility = View.INVISIBLE
+            binding.selectedImages = imageList
         } else {
             binding.emptyImage.visibility = View.VISIBLE
         }

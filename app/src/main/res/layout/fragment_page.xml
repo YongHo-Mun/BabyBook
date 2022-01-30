@@ -13,6 +13,10 @@
         <variable
             name="fragment"
             type="com.yongho.babybook.view.PageFragment" />
+
+        <variable
+            name="selectedImages"
+            type="java.util.List&lt;android.net.Uri>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,7 +88,7 @@
             android:layout_width="@dimen/constraint_match"
             android:layout_height="wrap_content"
             android:text="@string/button_done"
-            android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString(), viewModel.currentPage.imageList)}"
+            android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString(), selectedImages)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

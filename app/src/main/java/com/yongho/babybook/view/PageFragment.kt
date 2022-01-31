@@ -99,6 +99,10 @@ class PageFragment : Fragment() {
         parentFragmentManager.popBackStack()
     }
 
+    fun refreshImageViewPagerIndicator() {
+        binding.imageViewPagerIndicator.setViewPager(binding.imageViewPager)
+    }
+
     private fun launchGallery() {
         Log.d(TAG, "launchGallery")
         val intent = Intent(Intent.ACTION_PICK).apply {
@@ -118,17 +122,15 @@ class PageFragment : Fragment() {
         }
     }
 
-    private fun refreshImageViewPagerIndicator() {
-        binding.imageViewPagerIndicator.setViewPager(binding.imageViewPager)
-    }
-
     companion object {
         const val TAG = "PageFragment"
     }
 }
 
-@BindingAdapter(value = ["bind:images"], requireAll = false)
-fun setImages(viewPager: ViewPager2, images: List<Uri>) {
+@BindingAdapter(value = ["bind:images", "bind:fragment"], requireAll = false)
+fun setImages(viewPager: ViewPager2, images: List<Uri>, fragment: PageFragment) {
     val adapter = viewPager.adapter as ImageViewPagerAdapter
     adapter.setImageList(images)
+
+    fragment.refreshImageViewPagerIndicator()
 }

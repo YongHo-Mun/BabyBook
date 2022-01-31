@@ -20,7 +20,7 @@ class PageViewModel @ViewModelInject constructor(private val repository: PageRep
             var currentContent = ""
             var currentImageList = listOf<Uri>()
 
-            val queryData = repository.getPageByDate(date)ㅇ
+            val queryData = repository.getPageByDate(date)
 
             if (queryData != null) {
                 queryData.content.let {

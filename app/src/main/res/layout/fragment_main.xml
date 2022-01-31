@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/done_button"
+            app:layout_constraintBottom_toTopOf="@id/done_button"
             bind:pages="@{viewModel.pageList}"
             bind:fragment="@{fragment}"/>
 

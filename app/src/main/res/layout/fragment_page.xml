@@ -57,16 +57,6 @@
                 app:ci_height="@dimen/circle_indicator_height"
                 app:ci_margin="@dimen/circle_indicator_margin"
                 app:ci_width="@dimen/circle_indicator_width" />
-
-            <ImageView
-                android:id="@+id/empty_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clickable="true"
-                android:onClick="@{() -> fragment.onViewPagerClicked()}"
-                android:src="@drawable/ic_launcher_background"
-                android:visibility="@{viewModel.currentImageList.size == 0 ? View.VISIBLE : View.INVISIBLE}"/>
-
         </FrameLayout>
 
 

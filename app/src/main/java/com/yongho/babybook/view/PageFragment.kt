@@ -7,9 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -55,6 +53,11 @@ class PageFragment : Fragment() {
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_page, container, false)
         _binding?.apply {
@@ -73,6 +76,19 @@ class PageFragment : Fragment() {
         _binding = null
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.page_fragment_toolbar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.set_image -> {
+                launchGallery()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     fun onDoneButtonClicked(date: String, content: String?) {
         Log.d(TAG, "onDoneButtonClicked")
         Log.d(TAG, "date: $date, content: $content")
@@ -82,8 +98,8 @@ class PageFragment : Fragment() {
         parentFragmentManager.popBackStack()
     }
 
-    fun onViewPagerClicked() {
-        Log.d(TAG, "onViewPagerClicked")
+    private fun launchGallery() {
+        Log.d(TAG, "launchGallery")
         val intent = Intent(Intent.ACTION_PICK).apply {
             type = MediaStore.Images.Media.CONTENT_TYPE
             data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI

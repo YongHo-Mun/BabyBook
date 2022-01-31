@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.yongho.babybook.R
+import com.yongho.babybook.data.Page
 import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -89,11 +90,11 @@ class PageFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun onDoneButtonClicked(date: String, content: String?) {
+    fun onDoneButtonClicked(date: String, content: String, imageList: List<Uri>) {
         Log.d(TAG, "onDoneButtonClicked")
         Log.d(TAG, "date: $date, content: $content")
-        pageViewModel.currentDate.value = date
-        pageViewModel.currentContent.value = content
+
+        pageViewModel.currentPage.value = Page(date, content, imageList)
         pageViewModel.saveCurrentPage()
         parentFragmentManager.popBackStack()
     }
@@ -111,7 +112,8 @@ class PageFragment : Fragment() {
 
     private fun setImages(imageList: ArrayList<Uri>) {
         if (imageList.isNotEmpty()) {
-            pageViewModel.currentImageList.value = imageList
+            val adapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
+            adapter.setImageList(imageList)
         }
     }
 

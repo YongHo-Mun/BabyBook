@@ -31,6 +31,10 @@ class ImageViewPagerAdapter : RecyclerView.Adapter<ImageViewPagerAdapter.ViewHol
         notifyDataSetChanged()
     }
 
+    fun getImageList(): List<Uri> {
+        return imageList
+    }
+
     inner class ViewHolder(private val binding: ImageViewPagerItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(image: Uri) {

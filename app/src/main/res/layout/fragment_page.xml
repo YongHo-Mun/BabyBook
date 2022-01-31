@@ -6,7 +6,7 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View" />
+        <import type="com.yongho.babybook.view.ImageViewPagerAdapter"/>
 
         <variable
             name="viewModel"
@@ -30,7 +30,7 @@
             android:gravity="center_horizontal"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
-            android:text="@{viewModel.currentDate}"
+            android:text="@{viewModel.currentPage.date}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -47,7 +47,7 @@
                 android:id="@+id/image_view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/image_view_pager_height"
-                bind:images="@{viewModel.currentImageList}" />
+                bind:images="@{viewModel.currentPage.imageList}" />
 
             <me.relex.circleindicator.CircleIndicator3
                 android:layout_width="match_parent"
@@ -67,7 +67,7 @@
             android:inputType="textMultiLine"
             android:scrollbars="vertical"
             android:gravity="start|top"
-            android:text="@{viewModel.currentContent}"
+            android:text="@{viewModel.currentPage.content}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_view_pager_frame"
             app:layout_constraintBottom_toTopOf="@id/done_button"
@@ -78,7 +78,7 @@
             android:layout_width="@dimen/constraint_match"
             android:layout_height="wrap_content"
             android:text="@string/button_done"
-            android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString())}"
+            android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString(), ((ImageViewPagerAdapter)(imageViewPager.getAdapter())).getImageList())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

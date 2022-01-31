@@ -114,7 +114,12 @@ class PageFragment : Fragment() {
         if (imageList.isNotEmpty()) {
             val adapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
             adapter.setImageList(imageList)
+            refreshImageViewPagerIndicator()
         }
+    }
+
+    private fun refreshImageViewPagerIndicator() {
+        binding.imageViewPagerIndicator.setViewPager(binding.imageViewPager)
     }
 
     companion object {

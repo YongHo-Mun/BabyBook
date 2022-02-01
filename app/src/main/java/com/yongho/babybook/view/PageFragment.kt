@@ -1,5 +1,6 @@
 package com.yongho.babybook.view
 
+import android.Manifest
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Intent
@@ -8,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -54,6 +56,14 @@ class PageFragment : Fragment() {
         }
     }
 
+    private val permissionChecker = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        if (isGranted) {
+            launchGallery()
+        } else {
+            Toast.makeText(context, R.string.need_storage_permission, Toast.LENGTH_LONG)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -84,7 +94,7 @@ class PageFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.set_image -> {
-                launchGallery()
+                permissionChecker.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
             }
         }
         return super.onOptionsItemSelected(item)

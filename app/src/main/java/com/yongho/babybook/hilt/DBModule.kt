@@ -18,7 +18,7 @@ object DBModule {
 
     @Singleton
     @Provides
-    fun providePageDatabase(@ApplicationContext context: Context): PageDatabase = Room.databaseBuilder(context, PageDatabase::class.java, "page.db").addTypeConverter(PageTypeConverter()).build()
+    fun providePageDatabase(@ApplicationContext context: Context): PageDatabase = Room.databaseBuilder(context, PageDatabase::class.java, "page.db").addTypeConverter(PageTypeConverter(context.contentResolver)).build()
 
     @Singleton
     @Provides

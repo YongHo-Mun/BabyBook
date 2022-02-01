@@ -5,4 +5,5 @@
     <string name="button_add">추가</string>
     <string name="tool_bar_birthday_title">아기 생년월일</string>
     <string name="tool_bar_gallery_title">사진</string>
+    <string name="need_storage_permission">저장소 권한이 필요합니다.</string>
 </resources>

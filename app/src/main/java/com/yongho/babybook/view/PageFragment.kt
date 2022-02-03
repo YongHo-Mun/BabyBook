@@ -110,6 +110,12 @@ class PageFragment : Fragment() {
         binding.imageViewPagerIndicator.setViewPager(binding.imageViewPager)
     }
 
+    fun setViewPagerVisibility(isVisible: Boolean) {
+        val visibility = if (isVisible) View.VISIBLE else View.GONE
+        binding.imageViewPager.visibility = visibility
+        binding.imageViewPagerIndicator.visibility = visibility
+    }
+
     private fun launchGallery() {
         galleryLauncherBasedOnPermissionCheck.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
@@ -140,6 +146,7 @@ class PageFragment : Fragment() {
             val adapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
             adapter.setImageList(imageList)
             refreshImageViewPagerIndicator()
+            setViewPagerVisibility(imageList.isNotEmpty())
         }
     }
 
@@ -154,4 +161,5 @@ fun setImages(viewPager: ViewPager2, images: List<Uri>, fragment: PageFragment) 
     adapter.setImageList(images)
 
     fragment.refreshImageViewPagerIndicator()
+    fragment.setViewPagerVisibility(images.isNotEmpty())
 }

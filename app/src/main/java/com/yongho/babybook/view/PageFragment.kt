@@ -123,6 +123,7 @@ class PageFragment : Fragment() {
                 imageList.add(uri)
             } ?: intent.clipData?.let { clipData ->
                 val size = clipData.itemCount
+                Log.d(TAG, "selected uri size : $size")
 
                 for (idx in 0 until size) {
                     Log.d(TAG, "uri: ${clipData.getItemAt(idx).uri}")
@@ -133,6 +134,7 @@ class PageFragment : Fragment() {
 
         return imageList
     }
+
     private fun setImages(imageList: List<Uri>) {
         if (imageList.isNotEmpty()) {
             val adapter = binding.imageViewPager.adapter as ImageViewPagerAdapter

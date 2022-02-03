@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -30,37 +31,35 @@ class PageFragment : Fragment() {
     private var _binding: FragmentPageBinding? = null
     private val binding get() = _binding!!
 
-    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-        when(activityResult.resultCode) {
-            RESULT_OK -> {
-                activityResult.data?.let { intent ->
-                    val imageList = arrayListOf<Uri>()
+    private val galleryLauncher by lazy {
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            Log.d(TAG, "isGranted: $isGranted")
 
-                    intent.data?.let { uri ->
-                        imageList.add(uri)
-                    } ?: intent.clipData?.let { clipData ->
-                        val size = clipData.itemCount
+            if (isGranted) {
+                Log.d(TAG, "launchGallery")
+                val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+                    when(activityResult.resultCode) {
+                        RESULT_OK -> {
+                            val imageList = extractImageUriList(activityResult)
+                            setImages(imageList)
+                        }
 
-                        for (idx in 0 until size) {
-                            imageList.add(clipData.getItemAt(idx).uri)
+                        RESULT_CANCELED -> {
+                            Log.d(TAG, "image select canceled")
                         }
                     }
-
-                    setImages(imageList)
                 }
-            }
 
-            RESULT_CANCELED -> {
-                Log.d(TAG, "image select canceled")
-            }
-        }
-    }
+                val intent = Intent(Intent.ACTION_PICK).apply {
+                    type = MediaStore.Images.Media.CONTENT_TYPE
+                    data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                }
 
-    private val permissionChecker = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-        if (isGranted) {
-            launchGallery()
-        } else {
-            Toast.makeText(context, R.string.need_storage_permission, Toast.LENGTH_LONG)
+                launcher.launch(intent)
+            } else {
+                Toast.makeText(context, R.string.need_storage_permission, Toast.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -94,7 +93,7 @@ class PageFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.set_image -> {
-                permissionChecker.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+                launchGallery()
             }
         }
         return super.onOptionsItemSelected(item)
@@ -114,17 +113,29 @@ class PageFragment : Fragment() {
     }
 
     private fun launchGallery() {
-        Log.d(TAG, "launchGallery")
-        val intent = Intent(Intent.ACTION_PICK).apply {
-            type = MediaStore.Images.Media.CONTENT_TYPE
-            data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        }
-
-        galleryLauncher.launch(intent)
+        galleryLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
-    private fun setImages(imageList: ArrayList<Uri>) {
+    private fun extractImageUriList(activityResult: ActivityResult): List<Uri> {
+        val imageList = arrayListOf<Uri>()
+
+        activityResult.data?.let { intent ->
+            intent.data?.let { uri ->
+                Log.d(TAG, "uri: $uri")
+                imageList.add(uri)
+            } ?: intent.clipData?.let { clipData ->
+                val size = clipData.itemCount
+
+                for (idx in 0 until size) {
+                    Log.d(TAG, "uri: ${clipData.getItemAt(idx).uri}")
+                    imageList.add(clipData.getItemAt(idx).uri)
+                }
+            }
+        }
+
+        return imageList
+    }
+    private fun setImages(imageList: List<Uri>) {
         if (imageList.isNotEmpty()) {
             val adapter = binding.imageViewPager.adapter as ImageViewPagerAdapter
             adapter.setImageList(imageList)

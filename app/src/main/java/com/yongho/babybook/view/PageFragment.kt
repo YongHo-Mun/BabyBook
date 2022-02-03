@@ -31,35 +31,33 @@ class PageFragment : Fragment() {
     private var _binding: FragmentPageBinding? = null
     private val binding get() = _binding!!
 
-    private val galleryLauncher by lazy {
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            Log.d(TAG, "isGranted: $isGranted")
-
-            if (isGranted) {
-                Log.d(TAG, "launchGallery")
-                val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-                    when(activityResult.resultCode) {
-                        RESULT_OK -> {
-                            val imageList = extractImageUriList(activityResult)
-                            setImages(imageList)
-                        }
-
-                        RESULT_CANCELED -> {
-                            Log.d(TAG, "image select canceled")
-                        }
-                    }
-                }
-
-                val intent = Intent(Intent.ACTION_PICK).apply {
-                    type = MediaStore.Images.Media.CONTENT_TYPE
-                    data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-                }
-
-                launcher.launch(intent)
-            } else {
-                Toast.makeText(context, R.string.need_storage_permission, Toast.LENGTH_LONG).show()
+    private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        when(activityResult.resultCode) {
+            RESULT_OK -> {
+                val imageList = extractImageUriList(activityResult)
+                setImages(imageList)
             }
+
+            RESULT_CANCELED -> {
+                Log.d(TAG, "image select canceled")
+            }
+        }
+    }
+
+    private val galleryLauncherBasedOnPermissionCheck = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        Log.d(TAG, "isGranted: $isGranted")
+
+        if (isGranted) {
+            Log.d(TAG, "launchGallery")
+            val intent = Intent(Intent.ACTION_PICK).apply {
+                type = MediaStore.Images.Media.CONTENT_TYPE
+                data = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            }
+
+            galleryLauncher.launch(intent)
+        } else {
+            Toast.makeText(context, R.string.need_storage_permission, Toast.LENGTH_LONG).show()
         }
     }
 
@@ -113,7 +111,7 @@ class PageFragment : Fragment() {
     }
 
     private fun launchGallery() {
-        galleryLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+        galleryLauncherBasedOnPermissionCheck.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
     }
 
     private fun extractImageUriList(activityResult: ActivityResult): List<Uri> {

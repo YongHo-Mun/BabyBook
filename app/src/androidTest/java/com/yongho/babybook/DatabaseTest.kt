@@ -1,12 +1,14 @@
 package com.yongho.babybook
 
 import android.content.Context
+import android.net.Uri
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.data.PageDao
 import com.yongho.babybook.data.PageDatabase
+import com.yongho.babybook.data.PageTypeConverter
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -25,7 +27,9 @@ class DatabaseTest {
     @Before
     fun setup() {
         val context = ApplicationProvider.getApplicationContext<Context>()
-        pageDatabase = Room.inMemoryDatabaseBuilder(context, PageDatabase::class.java).build()
+        pageDatabase = Room.inMemoryDatabaseBuilder(context, PageDatabase::class.java)
+                            .addTypeConverter(PageTypeConverter(context.contentResolver))
+                            .build()
 
         pageDao = pageDatabase.pageDao()
     }
@@ -111,7 +115,7 @@ class DatabaseTest {
         Assert.assertEquals(selectedPageArray.size, dataInsertedCount)
     }
 
-    private fun getDummyPageData(date: String = LocalDate.now().toString(), content: String = "Today's my content"): Page {
-        return Page(date, content)
+    private fun getDummyPageData(date: String = LocalDate.now().toString(), content: String = "Today's my content", uriList: List<Uri> = listOf()): Page {
+        return Page(date, content, uriList)
     }
 }

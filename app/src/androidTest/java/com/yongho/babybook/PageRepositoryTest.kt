@@ -1,5 +1,6 @@
 package com.yongho.babybook
 
+import android.net.Uri
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.data.PageDao
 import com.yongho.babybook.hilt.DBModule
@@ -40,10 +41,22 @@ class PageRepositoryTest {
         Assert.assertEquals(returnedPageList.size, 1)
     }
 
+    @Test
+    fun insert_dataInserted_needToCall() = runBlocking {
+        val dummyPageData = getDummyPageData()
+        pageRepository.insert(dummyPageData)
+
+        Mockito.verify(dummyPageDao).insert(dummyPageData)
+    }
+
     private fun stubAsOneDummyData() {
         Mockito.`when`(dummyPageDao.getAll()).thenReturn(flow {
-            val dummyPageList = arrayOf(Page("2022-02-04", "Today's content", listOf()))
+            val dummyPageList = arrayOf(getDummyPageData())
             emit(dummyPageList)
         })
+    }
+
+    private fun getDummyPageData(date: String = "2022-02-04", content: String = "Today's content", imageList: List<Uri> = listOf()): Page {
+        return Page(date, content, imageList)
     }
 }

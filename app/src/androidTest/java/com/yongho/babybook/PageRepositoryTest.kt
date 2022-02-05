@@ -49,6 +49,14 @@ class PageRepositoryTest {
         Mockito.verify(dummyPageDao).insert(dummyPageData)
     }
 
+    @Test
+    fun delete_dataDeleted_needToCall() = runBlocking {
+        val dummyPageData = getDummyPageData()
+        pageRepository.delete(dummyPageData)
+
+        Mockito.verify(dummyPageDao).delete(dummyPageData)
+    }
+
     private fun stubAsOneDummyData() {
         Mockito.`when`(dummyPageDao.getAll()).thenReturn(flow {
             val dummyPageList = arrayOf(getDummyPageData())

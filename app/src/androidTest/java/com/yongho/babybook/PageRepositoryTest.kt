@@ -34,11 +34,25 @@ class PageRepositoryTest {
 
     @Test
     fun getAll_oneData_returnOneData() = runBlocking {
-        stubAsOneDummyData()
+        Mockito.`when`(dummyPageDao.getAll()).thenReturn(flow {
+            val dummyPageList = arrayOf(getDummyPageData())
+            emit(dummyPageList)
+        })
 
         val returnedPageList = pageRepository.getAll().first()
 
         Assert.assertEquals(returnedPageList.size, 1)
+    }
+
+    @Test
+    fun getPageByDate_onePageRequested_returnCorrectOneData() = runBlocking {
+        val requestDate = "2022-02-04"
+        val dummyPageData = getDummyPageData(requestDate)
+        Mockito.`when`(dummyPageDao.getPageByDate(requestDate)).thenReturn(dummyPageData)
+
+        val returnedPageData = pageRepository.getPageByDate(requestDate)
+
+        Assert.assertEquals(dummyPageData, returnedPageData)
     }
 
     @Test
@@ -55,13 +69,6 @@ class PageRepositoryTest {
         pageRepository.delete(dummyPageData)
 
         Mockito.verify(dummyPageDao).delete(dummyPageData)
-    }
-
-    private fun stubAsOneDummyData() {
-        Mockito.`when`(dummyPageDao.getAll()).thenReturn(flow {
-            val dummyPageList = arrayOf(getDummyPageData())
-            emit(dummyPageList)
-        })
     }
 
     private fun getDummyPageData(date: String = "2022-02-04", content: String = "Today's content", imageList: List<Uri> = listOf()): Page {

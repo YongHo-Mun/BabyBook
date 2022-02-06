@@ -112,20 +112,18 @@ class MainFragment : Fragment() {
 
         activity?.let {
             val sharedPreferences = it.getSharedPreferences(BirthdayFragment.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-            val birthday = sharedPreferences.getLong(
-                BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_KEY,
-                BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE
-            )
+            val birthday = sharedPreferences.getString(BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_KEY, BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
+            Log.d(TAG, "birthday : $birthday")
 
             birthdayInputted = (birthday != BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
         }
 
-        Log.d(BirthdayFragment.TAG, "birthdayInputted : $birthdayInputted")
+        Log.d(TAG, "birthdayInputted : $birthdayInputted")
         return birthdayInputted
     }
 
     private fun launchBirthdayPage() {
-        Log.d(BirthdayFragment.TAG, "launchMainPageList")
+        Log.d(TAG, "launchMainPageList")
         parentFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, BirthdayFragment())
             addToBackStack(null)

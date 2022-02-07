@@ -22,6 +22,7 @@ import com.yongho.babybook.data.Page
 import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 
 @AndroidEntryPoint
 class PageFragment : Fragment() {
@@ -97,7 +98,7 @@ class PageFragment : Fragment() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun onDoneButtonClicked(date: String, content: String, imageList: List<Uri>) {
+    fun onDoneButtonClicked(date: LocalDate, content: String, imageList: List<Uri>) {
         Log.d(TAG, "onDoneButtonClicked")
         Log.d(TAG, "date: $date, content: $content")
 

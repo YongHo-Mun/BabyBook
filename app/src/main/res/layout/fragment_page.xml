@@ -7,6 +7,7 @@
 
     <data>
         <import type="com.yongho.babybook.view.ImageViewPagerAdapter"/>
+        <import type="java.time.LocalDate"/>
 
         <variable
             name="viewModel"
@@ -30,7 +31,7 @@
             android:gravity="center_horizontal"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
-            android:text="@{viewModel.currentPage.date}"
+            android:text="@{viewModel.currentPage.date.toString()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -80,7 +81,7 @@
             android:layout_width="@dimen/constraint_match"
             android:layout_height="wrap_content"
             android:text="@string/button_done"
-            android:onClick="@{() -> fragment.onDoneButtonClicked(date.getText().toString(), content.getText().toString(), ((ImageViewPagerAdapter)(imageViewPager.getAdapter())).getImageList())}"
+            android:onClick="@{() -> fragment.onDoneButtonClicked(LocalDate.parse(date.getText()), content.getText().toString(), ((ImageViewPagerAdapter)(imageViewPager.getAdapter())).getImageList())}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

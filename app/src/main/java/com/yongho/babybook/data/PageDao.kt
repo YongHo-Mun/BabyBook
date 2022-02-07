@@ -2,6 +2,7 @@ package com.yongho.babybook.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import java.time.LocalDate
 
 @Dao
 interface PageDao {
@@ -9,7 +10,7 @@ interface PageDao {
     fun getAll(): Flow<Array<Page>>
 
     @Query("SELECT * FROM page WHERE date = :date")
-    suspend fun getPageByDate(date: String): Page?
+    suspend fun getPageByDate(date: LocalDate): Page?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(page: Page)

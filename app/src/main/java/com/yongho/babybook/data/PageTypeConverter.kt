@@ -9,6 +9,7 @@ import android.util.Log
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import java.time.LocalDate
 
 
 @ProvidedTypeConverter
@@ -35,6 +36,16 @@ class PageTypeConverter(private val contentResolver: ContentResolver) {
         return stringUriList.map {
             convertFilePathToUri(it)
         }
+    }
+
+    @TypeConverter
+    fun localDateToString(value: LocalDate): String {
+        return value.toString()
+    }
+
+    @TypeConverter
+    fun stringToLocalDate(value: String): LocalDate {
+        return LocalDate.parse(value)
     }
 
     private fun convertUriToFilePath(uri: Uri): String {

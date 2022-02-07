@@ -6,16 +6,17 @@ import androidx.lifecycle.*
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.repository.PageRepository
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class PageViewModel @ViewModelInject constructor(private val repository: PageRepository) : ViewModel() {
 
-    var currentPage = MutableLiveData(Page("", "", listOf()))
+    var currentPage = MutableLiveData(Page(LocalDate.now(), "", listOf()))
 
     val pageList by lazy {
         repository.getAll().asLiveData()
     }
 
-    fun setCurrentPage(date: String) {
+    fun setCurrentPage(date: LocalDate) {
         viewModelScope.launch {
             var currentContent = ""
             var currentImageList = listOf<Uri>()

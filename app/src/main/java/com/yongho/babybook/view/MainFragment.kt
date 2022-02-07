@@ -85,10 +85,10 @@ class MainFragment : Fragment() {
     }
 
     fun onAddButtonClickedListener() {
-        launchPage(LocalDate.now().toString())
+        launchPage(LocalDate.now())
     }
 
-    fun launchPage(date: String) {
+    fun launchPage(date: LocalDate) {
         updateCurrentPage(date)
 
         parentFragmentManager.beginTransaction().apply {
@@ -102,7 +102,7 @@ class MainFragment : Fragment() {
         binding.pageList.setHasFixedSize(true)
     }
 
-    private fun updateCurrentPage(date: String) {
+    private fun updateCurrentPage(date: LocalDate) {
         Log.d(TAG, "update current date : $date")
         pageListViewModel.setCurrentPage(date)
     }

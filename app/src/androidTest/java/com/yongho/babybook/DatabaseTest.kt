@@ -47,7 +47,7 @@ class DatabaseTest {
 
     @Test
     fun getPageByDate_noData_nullShouldBeReturned() = runBlocking {
-        val date = LocalDate.now().toString()
+        val date = LocalDate.now()
         val returnedData = pageDao.getPageByDate(date)
 
         Assert.assertNull(returnedData)
@@ -84,7 +84,7 @@ class DatabaseTest {
 
     @Test
     fun insertReplace_samePrimaryKeyInserted_shouldBeReplacedAsLaterData() = runBlocking {
-        val primaryKey = LocalDate.now().toString()
+        val primaryKey = LocalDate.now()
         val oldContent = "old my content"
         val newContent = "new my content"
 
@@ -107,7 +107,7 @@ class DatabaseTest {
         val dataInsertedCount = 10000
 
         repeat(dataInsertedCount) {
-            val pageDummyData = getDummyPageData(it.toString(), it.toString())
+            val pageDummyData = getDummyPageData(LocalDate.now().minusDays(it.toLong()), it.toString())
             pageDao.insert(pageDummyData)
         }
 
@@ -115,7 +115,7 @@ class DatabaseTest {
         Assert.assertEquals(selectedPageArray.size, dataInsertedCount)
     }
 
-    private fun getDummyPageData(date: String = LocalDate.now().toString(), content: String = "Today's my content", uriList: List<Uri> = listOf()): Page {
+    private fun getDummyPageData(date: LocalDate = LocalDate.now(), content: String = "Today's my content", uriList: List<Uri> = listOf()): Page {
         return Page(date, content, uriList)
     }
 }

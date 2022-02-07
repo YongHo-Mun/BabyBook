@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.runBlocking
 import org.junit.*
 import org.mockito.Mockito
+import java.time.LocalDate
 import javax.inject.Inject
 
 @UninstallModules(DBModule::class)
@@ -46,7 +47,7 @@ class PageRepositoryTest {
 
     @Test
     fun getPageByDate_onePageRequested_returnCorrectOneData() = runBlocking {
-        val requestDate = "2022-02-04"
+        val requestDate = LocalDate.now()
         val dummyPageData = getDummyPageData(requestDate)
         Mockito.`when`(dummyPageDao.getPageByDate(requestDate)).thenReturn(dummyPageData)
 
@@ -71,7 +72,7 @@ class PageRepositoryTest {
         Mockito.verify(dummyPageDao).delete(dummyPageData)
     }
 
-    private fun getDummyPageData(date: String = "2022-02-04", content: String = "Today's content", imageList: List<Uri> = listOf()): Page {
+    private fun getDummyPageData(date: LocalDate = LocalDate.now(), content: String = "Today's content", imageList: List<Uri> = listOf()): Page {
         return Page(date, content, imageList)
     }
 }

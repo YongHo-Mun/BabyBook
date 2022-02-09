@@ -7,4 +7,5 @@
     <string name="tool_bar_gallery_title">사진</string>
     <string name="need_storage_permission">저장소 권한이 필요합니다.</string>
     <string name="input_diary_hint">육아 일기를 기록하세요!</string>
+    <string name="dday_unit">%s 일째</string>
 </resources>

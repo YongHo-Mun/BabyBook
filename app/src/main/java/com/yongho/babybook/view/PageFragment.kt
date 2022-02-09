@@ -19,6 +19,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.yongho.babybook.R
 import com.yongho.babybook.data.Page
+import com.yongho.babybook.data.UserInfoDao
 import com.yongho.babybook.databinding.FragmentPageBinding
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -75,6 +76,10 @@ class PageFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             fragment = this@PageFragment
             imageViewPager.adapter = ImageViewPagerAdapter()
+
+            context?.let {
+                birthDay = UserInfoDao.getBirthday(it)
+            }
         }
 
         return binding.root

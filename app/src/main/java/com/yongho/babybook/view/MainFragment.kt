@@ -1,6 +1,5 @@
 package com.yongho.babybook.view
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.yongho.babybook.R
 import com.yongho.babybook.databinding.FragmentMainBinding
 import com.yongho.babybook.data.Page
+import com.yongho.babybook.data.UserInfoDao
 import com.yongho.babybook.viewmodel.PageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
@@ -110,12 +110,11 @@ class MainFragment : Fragment() {
     private fun isBirthdayInputted() : Boolean {
         var birthdayInputted = false
 
-        activity?.let {
-            val sharedPreferences = it.getSharedPreferences(BirthdayFragment.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
-            val birthday = sharedPreferences.getString(BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_KEY, BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
+        context?.let {
+            val birthday = UserInfoDao.getBirthday(it)
             Log.d(TAG, "birthday : $birthday")
 
-            birthdayInputted = (birthday != BirthdayFragment.SHARED_PREFERENCES_BIRTH_DAY_DEFAULT_VALUE)
+            birthdayInputted = (birthday != null)
         }
 
         Log.d(TAG, "birthdayInputted : $birthdayInputted")

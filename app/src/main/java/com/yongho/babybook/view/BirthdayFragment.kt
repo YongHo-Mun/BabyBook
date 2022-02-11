@@ -35,6 +35,16 @@ class BirthdayFragment : Fragment() {
                 val epochMillis = TimeUnit.DAYS.toMillis(LocalDate.of(year, month + 1, dayOfMonth).toEpochDay())
                 calendarView.date = epochMillis
             }
+
+            context?.let { context ->
+                val localDate = UserInfoDao.getBirthday(context)
+
+                calendar.date = if (localDate == null) {
+                    TimeUnit.DAYS.toMillis(LocalDate.now().toEpochDay())
+                } else {
+                    TimeUnit.DAYS.toMillis(localDate.toEpochDay())
+                }
+            }
         }
 
         return binding.root

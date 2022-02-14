@@ -48,7 +48,7 @@
             android:gravity="end"
             android:textSize="@dimen/title_text_size"
             android:textStyle="bold"
-            android:text="@{@string/dday_unit(Long.toString(ChronoUnit.DAYS.between(viewModel.currentPage.date, birthDay)))}"
+            android:text="@{@string/dday_unit(Long.toString(ChronoUnit.DAYS.between(birthDay, viewModel.currentPage.date)))}"
             app:layout_constraintStart_toStartOf="@id/date"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

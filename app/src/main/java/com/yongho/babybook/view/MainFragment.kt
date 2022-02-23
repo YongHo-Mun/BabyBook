@@ -13,17 +13,21 @@ import com.yongho.babybook.R
 import com.yongho.babybook.databinding.FragmentMainBinding
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.data.UserInfoDao
-import com.yongho.babybook.viewmodel.PageViewModel
+import com.yongho.babybook.viewmodel.BabyBookViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
 
-    private val pageListViewModel: PageViewModel by activityViewModels()
+    private val babyBookListViewModel: BabyBookViewModel by activityViewModels()
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+
+    private val monthSelectDialog by lazy {
+        MonthSelectDialog()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +41,9 @@ class MainFragment : Fragment() {
             return null
         }
 
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false)
-        _binding?.apply {
+        _binding = DataBindingUtil.inflate<FragmentMainBinding?>(inflater, R.layout.fragment_main, container, false).apply {
             lifecycleOwner = viewLifecycleOwner
-            viewModel = pageListViewModel
+            viewModel = babyBookListViewModel
             fragment = this@MainFragment
         }
 
@@ -77,7 +80,7 @@ class MainFragment : Fragment() {
             builder.setMessage("Delete selected page?")
                 .setNegativeButton("NO") { _, _ -> }
                 .setPositiveButton("YES") { _, _ ->
-                    pageListViewModel.delete(page)
+                    babyBookListViewModel.delete(page)
                 }
 
             builder.show()
@@ -86,6 +89,10 @@ class MainFragment : Fragment() {
 
     fun onAddButtonClickedListener() {
         launchPage(LocalDate.now())
+    }
+
+    fun onMonthSelectButtonClickedListener() {
+        monthSelectDialog.show(parentFragmentManager, MONTH_SELECT_DIALOG_FRAGMENT_TAG)
     }
 
     fun launchPage(date: LocalDate) {
@@ -104,7 +111,7 @@ class MainFragment : Fragment() {
 
     private fun updateCurrentPage(date: LocalDate) {
         Log.d(TAG, "update current date : $date")
-        pageListViewModel.setCurrentPage(date)
+        babyBookListViewModel.setCurrentPage(date)
     }
 
     private fun isBirthdayInputted() : Boolean {
@@ -132,6 +139,7 @@ class MainFragment : Fragment() {
 
     companion object {
         private const val TAG = "MainFragment"
+        private const val MONTH_SELECT_DIALOG_FRAGMENT_TAG = "month_select_dialog"
     }
 }
 

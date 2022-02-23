@@ -8,4 +8,7 @@
     <string name="need_storage_permission">저장소 권한이 필요합니다.</string>
     <string name="input_diary_hint">육아 일기를 기록하세요!</string>
     <string name="dday_unit">%s 일째</string>
+    <string name="btn_cancel">취소</string>
+    <string name="btn_ok">확인</string>
+    <string name="selected_month">%d년 %d월</string>
 </resources>

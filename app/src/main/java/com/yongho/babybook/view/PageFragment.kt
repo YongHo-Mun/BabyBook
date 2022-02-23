@@ -21,14 +21,14 @@ import com.yongho.babybook.R
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.data.UserInfoDao
 import com.yongho.babybook.databinding.FragmentPageBinding
-import com.yongho.babybook.viewmodel.PageViewModel
+import com.yongho.babybook.viewmodel.BabyBookViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDate
 
 @AndroidEntryPoint
 class PageFragment : Fragment() {
 
-    private val pageViewModel : PageViewModel by activityViewModels()
+    private val babyBookViewModel : BabyBookViewModel by activityViewModels()
 
     private var _binding: FragmentPageBinding? = null
     private val binding get() = _binding!!
@@ -72,7 +72,7 @@ class PageFragment : Fragment() {
         _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_page, container, false)
         _binding?.apply {
             Log.d(TAG, "initialize binding")
-            viewModel = pageViewModel
+            viewModel = babyBookViewModel
             lifecycleOwner = viewLifecycleOwner
             fragment = this@PageFragment
             imageViewPager.adapter = ImageViewPagerAdapter()
@@ -107,8 +107,8 @@ class PageFragment : Fragment() {
         Log.d(TAG, "onDoneButtonClicked")
         Log.d(TAG, "date: $date, content: $content")
 
-        pageViewModel.currentPage.value = Page(date, content, imageList)
-        pageViewModel.saveCurrentPage()
+        babyBookViewModel.currentPage.value = Page(date, content, imageList)
+        babyBookViewModel.saveCurrentPage()
         parentFragmentManager.popBackStack()
     }
 

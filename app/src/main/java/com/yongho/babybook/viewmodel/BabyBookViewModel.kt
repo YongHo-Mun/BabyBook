@@ -8,9 +8,10 @@ import com.yongho.babybook.repository.PageRepository
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class PageViewModel @ViewModelInject constructor(private val repository: PageRepository) : ViewModel() {
+class BabyBookViewModel @ViewModelInject constructor(private val repository: PageRepository) : ViewModel() {
 
-    var currentPage = MutableLiveData(Page(LocalDate.now(), "", listOf()))
+    val currentPage = MutableLiveData(Page(LocalDate.now(), "", listOf()))
+    val selectedMonth = MutableLiveData(LocalDate.now())
 
     val pageList by lazy {
         repository.getAll().asLiveData()

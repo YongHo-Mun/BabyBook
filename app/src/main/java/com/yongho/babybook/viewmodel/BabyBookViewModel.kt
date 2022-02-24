@@ -3,6 +3,7 @@ package com.yongho.babybook.viewmodel
 import android.net.Uri
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import androidx.lifecycle.Transformations.switchMap
 import com.yongho.babybook.data.Page
 import com.yongho.babybook.repository.PageRepository
 import kotlinx.coroutines.launch
@@ -14,7 +15,9 @@ class BabyBookViewModel @ViewModelInject constructor(private val repository: Pag
     val selectedMonth = MutableLiveData(LocalDate.now())
 
     val pageList by lazy {
-        repository.getAll().asLiveData()
+        switchMap(selectedMonth) {
+            repository.getPagesAtMonth(it).asLiveData()
+        }
     }
 
     fun setCurrentPage(date: LocalDate) {

@@ -14,6 +14,13 @@ class PageRepository @Inject constructor(private val pageDao: PageDao) {
         return pageDao.getAll()
     }
 
+    fun getPagesAtMonth(selectedMonth: LocalDate): Flow<Array<Page>> {
+        val startDate = selectedMonth.withDayOfMonth(1)
+        val endDate = selectedMonth.withDayOfMonth(selectedMonth.lengthOfMonth())
+
+        return pageDao.getPagesAtMonth(startDate, endDate)
+    }
+
     suspend fun getPageByDate(data: LocalDate): Page? {
         return pageDao.getPageByDate(data)
     }

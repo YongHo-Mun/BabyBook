@@ -39,13 +39,13 @@ class PageTypeConverter(private val contentResolver: ContentResolver) {
     }
 
     @TypeConverter
-    fun localDateToString(value: LocalDate): String {
-        return value.toString()
+    fun localDateToLong(value: LocalDate): Long {
+        return value.toEpochDay()
     }
 
     @TypeConverter
-    fun stringToLocalDate(value: String): LocalDate {
-        return LocalDate.parse(value)
+    fun longToLocalDate(value: Long): LocalDate {
+        return LocalDate.ofEpochDay(value)
     }
 
     private fun convertUriToFilePath(uri: Uri): String {
